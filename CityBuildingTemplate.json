@@ -1,22 +1,23 @@
 {
     "Aliases": {
-        "Military": "C:\\Users\\Noah\\Pictures\\Useful\\LongLiveTheEmpire\\MilitaryDistrict.png", 
-        "Commercial": "C:\\Users\\Noah\\Pictures\\Useful\\LongLiveTheEmpire\\CommercialDistrict.png", 
-        "Surveillance": "C:\\Users\\Noah\\Pictures\\Useful\\LongLiveTheEmpire\\SurviellanceDistrict.png", 
-        "Research": "C:\\Users\\Noah\\Pictures\\Useful\\LongLiveTheEmpire\\ResearchDistrict.png", 
-        "Intelligence": "C:\\Users\\Noah\\Pictures\\Useful\\LongLiveTheEmpire\\IntelligenceDistrict.png", 
-        "Media": "C:\\Users\\Noah\\Pictures\\Useful\\LongLiveTheEmpire\\MediaDistrict.png", 
-        "Empire": "C:\\Users\\Noah\\Pictures\\Useful\\LongLiveTheEmpire\\Empire.png", 
-        "Rebel": "C:\\Users\\Noah\\Pictures\\Useful\\LongLiveTheEmpire\\Rebel.png", 
-        "Strength": "C:\\Users\\Noah\\Pictures\\Useful\\LongLiveTheEmpire\\Strength.png", 
-        "Wealth": "C:\\Users\\Noah\\Pictures\\Useful\\LongLiveTheEmpire\\Wealth.png", 
-        "Control": "C:\\Users\\Noah\\Pictures\\Useful\\LongLiveTheEmpire\\Control.png",
-        "Manipulation": "C:\\Users\\Noah\\Pictures\\Useful\\LongLiveTheEmpire\\ManipulationToken.png"
+        "Military": "C:/Users/Noah/Pictures/Useful/LongLiveTheEmpire/MilitaryDistrict.png", 
+        "Commercial": "C:/Users/Noah/Pictures/Useful/LongLiveTheEmpire/CommercialDistrict.png", 
+        "Surveillance": "C:/Users/Noah/Pictures/Useful/LongLiveTheEmpire/SurviellanceDistrict.png", 
+        "Research": "C:/Users/Noah/Pictures/Useful/LongLiveTheEmpire/ResearchDistrict.png", 
+        "Intelligence": "C:/Users/Noah/Pictures/Useful/LongLiveTheEmpire/IntelligenceDistrict.png", 
+        "Media": "C:/Users/Noah/Pictures/Useful/LongLiveTheEmpire/MediaDistrict.png", 
+        "Empire": "C:/Users/Noah/Pictures/Useful/LongLiveTheEmpire/Empire.png", 
+        "Rebel": "C:/Users/Noah/Pictures/Useful/LongLiveTheEmpire/Rebel.png", 
+        "Strength": "C:/Users/Noah/Pictures/Useful/LongLiveTheEmpire/Strength.png", 
+        "Wealth": "C:/Users/Noah/Pictures/Useful/LongLiveTheEmpire/Wealth.png", 
+        "Control": "C:/Users/Noah/Pictures/Useful/LongLiveTheEmpire/Control.png",
+        "Manipulation": "C:/Users/Noah/Pictures/Useful/LongLiveTheEmpire/ManipulationToken.png"
     },
     "Canvas": 
     {
         "Width": "674",
-        "Height": "1050"
+        "Height": "1050",
+        "Background": "FFFFFF"
     },
     "Borders": 
     [
