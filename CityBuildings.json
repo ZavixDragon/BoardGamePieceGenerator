@@ -1,254 +1,254 @@
 [
     {
+        "FileName": "ImperialArmsDepot-Empire.png",
         "Name": "Imperial Arms Depot",
         "Action": "+4 {^Strength}",
         "Alignment": "Empire",
-        "District": "Military District",
-        "DistrictImage": "Military"
+        "District": "Military District"
     },
     {
+        "FileName": "ImperialArmsDepot-Rebel.png",
         "Name": "Imperial Arms Depot",
         "Action": "-4 {^Strength}",
         "Alignment": "Rebel",
-        "District": "Military District",
-        "DistrictImage": "Military"
+        "District": "Military District"
     },
     {
+        "FileName": "EliteTaskForceHeadquarters-Empire.png",
         "Name": "Elite Task Force Headquarters",
         "Action": "Move the Emperor to a different room and the Emperor takes an action",
         "Alignment": "Empire",
-        "District": "Military District",
-        "DistrictImage": "Military"
+        "District": "Military District"
     },
     {
+        "FileName": "EliteTaskForceHeadquarters-Rebel.png",
         "Name": "Elite Task Force Headquarters",
         "Action": "Move the Emperor to a different room and the Emperor takes an action",
         "Alignment": "Rebel",
-        "District": "Military District",
-        "DistrictImage": "Military"
+        "District": "Military District"
     },
     {
+        "FileName": "RoyalTrainingAcademy-Empire.png",
         "Name": "Royal Training Academy",
         "Action": "Cancel the next 2 cards",
         "Alignment": "Empire",
-        "District": "Military District",
-        "DistrictImage": "Military"
+        "District": "Military District"
     },
     {
+        "FileName": "RoyalTrainingAcademy-Rebel.png",
         "Name": "Royal Training Academy",
         "Action": "Cancel the next 2 cards",
         "Alignment": "Rebel",
-        "District": "Military District",
-        "DistrictImage": "Military"
+        "District": "Military District"
     },
     {
+        "FileName": "StarlightMall-Empire.png",
         "Name": "Starlight Mall",
         "Action": "+4 {^Wealth}",
         "Alignment": "Empire",
-        "District": "Commercial District",
-        "DistrictImage": "Commercial"
+        "District": "Commercial District"
     },
     {
+        "FileName": "StarlightMall-Rebel.png",
         "Name": "Starlight Mall",
         "Action": "-4 {^Wealth}",
         "Alignment": "Rebel",
-        "District": "Commercial District",
-        "DistrictImage": "Commercial"
+        "District": "Commercial District"
     },
     {
+        "FileName": "ImperialStockMarket-Empire.png",
         "Name": "Imperial Stock Market",
         "Action": "Reverse and Double the next Basic card",
         "Alignment": "Empire",
-        "District": "Commercial District",
-        "DistrictImage": "Commercial"
+        "District": "Commercial District"
     },
     {
+        "FileName": "ImperialStockMarket-Rebel.png",
         "Name": "Imperial Stock Market",
         "Action": "Reverse and Double the next Basic card",
         "Alignment": "Rebel",
-        "District": "Commercial District",
-        "DistrictImage": "Commercial"
+        "District": "Commercial District"
     },
     {
+        "FileName": "GlobalBankingSolutions-Empire.png",
         "Name": "Global Banking Solutions",
         "Action": "Repeat the effect of the last card twice, including all modifiers",
         "Alignment": "Empire",
-        "District": "Commercial District",
-        "DistrictImage": "Commercial"
+        "District": "Commercial District"
     },
     {
+        "FileName": "GlobalBankingSolutions-Rebel.png",
         "Name": "Global Banking Solutions",
         "Action": "Repeat the effect of the last card twice, including all modifiers",
         "Alignment": "Rebel",
-        "District": "Commercial District",
-        "DistrictImage": "Commercial"
+        "District": "Commercial District"
     },
     {
+        "FileName": "SatelliteUplinkControl-Empire.png",
         "Name": "Satellite Uplink Control",
         "Action": "+4 {^Control}",
         "Alignment": "Empire",
-        "District": "Surveillance District",
-        "DistrictImage": "Surveillance"
+        "District": "Surveillance District"
     },
     {
+        "FileName": "SatelliteUplinkControl-Rebel.png",
         "Name": "Satellite Uplink Control",
         "Action": "-4 {^Control}",
         "Alignment": "Rebel",
-        "District": "Surveillance District",
-        "DistrictImage": "Surveillance"
+        "District": "Surveillance District"
     },
     {
+        "FileName": "SurveillanceTower-Empire.png",
         "Name": "Surveillance Tower",
         "Action": "Gain 2 {^Manipulation}",
         "Alignment": "Empire",
-        "District": "Surveillance District",
-        "DistrictImage": "Surveillance"
+        "District": "Surveillance District"
     },
     {
+        "FileName": "SurveillanceTower-Rebel.png",
         "Name": "Surveillance Tower",
         "Action": "Gain 2 {^Manipulation}",
         "Alignment": "Rebel",
-        "District": "Surveillance District",
-        "DistrictImage": "Surveillance"
+        "District": "Surveillance District"
     },
     {
+        "FileName": "AntiTerroristWatch-Empire.png",
         "Name": "Anti-Terrorist Watch",
         "Action": "Move this agent to an unoccupied district and then this agent takes that districts action",
         "Alignment": "Empire",
-        "District": "Surveillance District",
-        "DistrictImage": "Surveillance"
+        "District": "Surveillance District"
     },
     {
+        "FileName": "AntiTerroristWatch-Rebel.png",
         "Name": "Anti-Terrorist Watch",
         "Action": "Move this agent to an unoccupied district and then this agent takes that districts action",
         "Alignment": "Rebel",
-        "District": "Surveillance District",
-        "DistrictImage": "Surveillance"
+        "District": "Surveillance District"
     },
     {
+        "FileName": "BioGeneticsLab-Empire.png",
         "Name": "Bio-Genetics Lab",
-        "Action": "-3 {^Control}\n+3 {^Strength}\n+3 {^Wealth}",
+        "Action": "-3 {^Control} \n +3 {^Strength} \n +3 {^Wealth}",
         "Alignment": "Empire",
-        "District": "Research District",
-        "DistrictImage": "Research"
+        "District": "Research District"
     },
     {
+        "FileName": "BioGeneticsLab-Rebel.png",
         "Name": "Bio-Genetics Lab",
-        "Action": "+3 {^Control}\n-3 {^Strength}\n-3 {^Wealth}",
+        "Action": "+3 {^Control} \n -3 {^Strength} \n -3 {^Wealth}",
         "Alignment": "Rebel",
-        "District": "Research District",
-        "DistrictImage": "Research"
+        "District": "Research District"
     },
     {
+        "FileName": "SpecializedWeaponryDivision-Empire.png",
         "Name": "Specialized Weaponry Division",
         "Action": "Cancel the next 2 cards",
         "Alignment": "Empire",
-        "District": "Research District",
-        "DistrictImage": "Research"
+        "District": "Research District"
     },
     {
+        "FileName": "SpecializedWeaponryDivision-Rebel.png",
         "Name": "Specialized Weaponry Division",
         "Action": "Cancel the next 2 cards",
         "Alignment": "Rebel",
-        "District": "Research District",
-        "DistrictImage": "Research"
+        "District": "Research District"
     },
     {
+        "FileName": "SuperWeaponFacility-Empire.png",
         "Name": "Super Weapon Facility",
         "Action": "Repeat the effect of the last card twice, including all modifiers",
         "Alignment": "Empire",
-        "District": "Research District",
-        "DistrictImage": "Research"
+        "District": "Research District"
     },
     {
+        "FileName": "SuperWeaponFacility-Rebel.png",
         "Name": "Super Weapon Facility",
         "Action": "Repeat the effect of the last card twice, including all modifiers",
         "Alignment": "Rebel",
-        "District": "Research District",
-        "DistrictImage": "Research"
+        "District": "Research District"
     },
     {
+        "FileName": "InfiltrationSect-Empire.png",
         "Name": "Infiltration Sect",
-        "Action": "-3 {^Wealth}\n+3 {^Control}\n+3 {^Strength}",
+        "Action": "-3 {^Wealth} \n +3 {^Control} \n +3 {^Strength}",
         "Alignment": "Empire",
-        "District": "Intelligence District",
-        "DistrictImage": "Intelligence"
+        "District": "Intelligence District"
     },
     {
+        "FileName": "InfiltrationSect-Rebel.png",
         "Name": "Infiltration Sect",
-        "Action": "+3 {^Wealth}\n-3 {^Control}\n-3 {^Strength}",
+        "Action": "+3 {^Wealth} \n -3 {^Control} \n -3 {^Strength}",
         "Alignment": "Rebel",
-        "District": "Intelligence District",
-        "DistrictImage": "Intelligence"
+        "District": "Intelligence District"
     },
     {
+        "FileName": "BlackOpsDivision-Empire.png",
         "Name": "Black Ops Division",
         "Action": "Move the Emperor to a different room and the Emperor takes an action",
         "Alignment": "Empire",
-        "District": "Intelligence District",
-        "DistrictImage": "Intelligence"
+        "District": "Intelligence District"
     },
     {
+        "FileName": "BlackOpsDivision-Rebel.png",
         "Name": "Black Ops Division",
         "Action": "Move the Emperor to a different room and the Emperor takes an action",
         "Alignment": "Rebel",
-        "District": "Intelligence District",
-        "DistrictImage": "Intelligence"
+        "District": "Intelligence District"
     },
     {
+        "FileName": "CounterIntelligenceBureau-Empire.png",
         "Name": "Counter Intelligence Bureau",
         "Action": "Move this agent to an unoccupied district and then this agent takes that districts action  ",
         "Alignment": "Empire",
-        "District": "Intelligence District",
-        "DistrictImage": "Intelligence"
+        "District": "Intelligence District"
     },
     {
+        "FileName": "CounterIntelligenceBureau-Rebel.png",
         "Name": "Counter Intelligence Bureau",
         "Action": "Move this agent to an unoccupied district and then this agent takes that districts action  ",
         "Alignment": "Rebel",
-        "District": "Intelligence District",
-        "DistrictImage": "Intelligence"
+        "District": "Intelligence District"
     },
     {
+        "FileName": "NewsNowCenter-Empire.png",
         "Name": "News Now Center",
-        "Action": "-3 {^Strength}\n+3 {^Wealth}\n+3 {^Control}",
+        "Action": "-3 {^Strength} \n +3 {^Wealth} \n +3 {^Control}",
         "Alignment": "Empire",
-        "District": "Media District",
-        "DistrictImage": "Media"
+        "District": "Media District"
     },
     {
+        "FileName": "NewsNowCenter-Rebel.png",
         "Name": "News Now Center",
-        "Action": "+3 {^Strength}\n-3 {^Wealth}\n-3 {^Control}",
+        "Action": "+3 {^Strength} \n -3 {^Wealth} \n -3 {^Control}",
         "Alignment": "Rebel",
-        "District": "Media District",
-        "DistrictImage": "Media"
+        "District": "Media District"
     },
     {
+        "FileName": "DepartmentOfSubliminalMessaging-Empire.png",
         "Name": "Department of Subliminal Messaging",
         "Action": "Gain 2 {^Manipulation}",
         "Alignment": "Empire",
-        "District": "Media District",
-        "DistrictImage": "Media"
+        "District": "Media District"
     },
     {
+        "FileName": "DepartmentOfSubliminalMessaging-Rebel.png",
         "Name": "Department of Subliminal Messaging",
         "Action": "Gain 2 {^Manipulation}",
         "Alignment": "Rebel",
-        "District": "Media District",
-        "DistrictImage": "Media"
+        "District": "Media District"
     },
     {
+        "FileName": "CrisisSpinstersDivision-Empire.png",
         "Name": "Crisis Spinsters Division",
         "Action": "Reverse and Double the next Basic card",
         "Alignment": "Empire",
-        "District": "Media District",
-        "DistrictImage": "Media"
+        "District": "Media District"
     },
     {
+        "FileName": "CrisisSpinstersDivision-Rebel.png",
         "Name": "Crisis Spinsters Division",
         "Action": "Reverse and Double the next Basic card",
         "Alignment": "Rebel",
-        "District": "Media District",
-        "DistrictImage": "Media"
+        "District": "Media District"
     }
 ]

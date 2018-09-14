@@ -1,95 +1,114 @@
 {
-    "Aliases": {
-        "Military": "C:/Users/Noah/Pictures/Useful/LongLiveTheEmpire/MilitaryDistrict.png", 
-        "Commercial": "C:/Users/Noah/Pictures/Useful/LongLiveTheEmpire/CommercialDistrict.png", 
-        "Surveillance": "C:/Users/Noah/Pictures/Useful/LongLiveTheEmpire/SurviellanceDistrict.png", 
-        "Research": "C:/Users/Noah/Pictures/Useful/LongLiveTheEmpire/ResearchDistrict.png", 
-        "Intelligence": "C:/Users/Noah/Pictures/Useful/LongLiveTheEmpire/IntelligenceDistrict.png", 
-        "Media": "C:/Users/Noah/Pictures/Useful/LongLiveTheEmpire/MediaDistrict.png", 
+    "Path": "C:/Users/Noah/Pictures/Useful/LongLiveTheEmpire/CityBuildings",
+    "Keywords": {
+        "Military District": "C:/Users/Noah/Pictures/Useful/LongLiveTheEmpire/MilitaryDistrict.png", 
+        "Commercial District": "C:/Users/Noah/Pictures/Useful/LongLiveTheEmpire/CommercialDistrict.png", 
+        "Surveillance District": "C:/Users/Noah/Pictures/Useful/LongLiveTheEmpire/SurviellanceDistrict.png", 
+        "Research District": "C:/Users/Noah/Pictures/Useful/LongLiveTheEmpire/ResearchDistrict.png", 
+        "Intelligence District": "C:/Users/Noah/Pictures/Useful/LongLiveTheEmpire/IntelligenceDistrict.png", 
+        "Media District": "C:/Users/Noah/Pictures/Useful/LongLiveTheEmpire/MediaDistrict.png", 
         "Empire": "C:/Users/Noah/Pictures/Useful/LongLiveTheEmpire/Empire.png", 
         "Rebel": "C:/Users/Noah/Pictures/Useful/LongLiveTheEmpire/Rebel.png", 
         "Strength": "C:/Users/Noah/Pictures/Useful/LongLiveTheEmpire/Strength.png", 
         "Wealth": "C:/Users/Noah/Pictures/Useful/LongLiveTheEmpire/Wealth.png", 
         "Control": "C:/Users/Noah/Pictures/Useful/LongLiveTheEmpire/Control.png",
-        "Manipulation": "C:/Users/Noah/Pictures/Useful/LongLiveTheEmpire/ManipulationToken.png"
+        "Manipulation": "C:/Users/Noah/Pictures/Useful/LongLiveTheEmpire/ManipulationToken.png",
+        
+        "Font": "Arial",
+        
+        "Regular": "0",
+        "Bold": "1",
+        "Italic": "2",
+        "BoldItalic": 3,
+        "Underline": "4",
+        "BoldUnderline": "5",
+        "ItalicUnderline": "6",
+        "BoldItalicUnderline": "7",
+        "Strickout": "8",
+        "BoldStrikeout": "9",
+        "ItalicStrikeout": "10",
+        "BoldItalicStrikeout": "11",
+        "UnderlineStrikeout": "12",
+        "BoldUnderlineStrikeout": "13",
+        "ItalicUnderlineStrikeout": "14",
+        "BoldItalicUnderlineStrikeout": "15"
     },
     "Canvas": 
     {
         "Width": "674",
-        "Height": "1050",
-        "Background": "FFFFFF"
+        "Height": "1050"
     },
     "Borders": 
     [
         {
-            "Color": "000000",
             "X": "0",
             "Y": "0",
             "Width": "674",
             "Height": "1050",
-            "Thickness": "7"
+            "Thickness": "6",
+            "Alignment": "Inner"
         }
     ],
     "Texts": 
     [
         {
-            "Text": "*Name",
-            "Font": "Arial",
-            "FontSize": "18",
+            "Content": "*Name",
+            "Font": "^Font",
+            "FontSize": "50",
+            "FontStyle": "^Bold",
             "X": "37",
             "Y": "25", 
             "Width": "600",
             "Height": "1000",
-            "VerticialTextAlign": "Top",
-            "HorizontalTextAlign": "Center"
+            "VerticalTextAlign": "Top"
         },
         {
-            "Text": "*Action",
-            "Font": "Arial",
-            "FontSize": "10",
+            "Content": "*Action",
+            "Font": "^Font",
+            "FontSize": "40",
+            "FontStyle": "^Bold",
             "X": "37",
             "Y": "25", 
             "Width": "600",
             "Height": "1000",
-            "VerticialTextAlign": "Center",
-            "HorizontalTextAlign": "Center"
+            "VerticalTextAlign": "Center"
         },
         {
-            "Text": "*Alignment",
-            "Font": "Arial",
-            "FontSize": "10",
-            "X": "37",
-            "Y": "875", 
-            "Width": "600",
-            "Height": "50",
-            "VerticialTextAlign": "Bottom",
-            "HorizontalTextAlign": "Center"
-        },
-        {
-            "Text": "*District",
-            "Font": "Arial",
-            "FontSize": "12",
+            "Content": "*Alignment",
+            "Font": "^Font",
+            "FontSize": "20",
+            "FontStyle": "^Bold",
             "X": "37",
             "Y": "925", 
             "Width": "600",
             "Height": "50",
-            "VerticialTextAlign": "Bottom",
-            "HorizontalTextAlign": "Center"
+            "VerticalTextAlign": "Bottom"
+        },
+        {
+            "Content": "*District",
+            "Font": "^Font",
+            "FontSize": "30",
+            "FontStyle": "^Bold",
+            "X": "37",
+            "Y": "975", 
+            "Width": "600",
+            "Height": "50",
+            "VerticalTextAlign": "Bottom"
         }
     ],
     "Images": 
     [
         {
-            "Source": "^*DistrictImage",
-            "Opacity": "30",
+            "Source": "^*Alignment",
+            "Opacity": "0.3",
             "X": "7",
             "Y": "195", 
             "Width": "330",
             "Height": "330"
         },
         {
-            "Source": "^*DistrictImage",
-            "Opacity": "30",
+            "Source": "^*District",
+            "Opacity": "0.3",
             "X": "337",
             "Y": "525", 
             "Width": "330",
