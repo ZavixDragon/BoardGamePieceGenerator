@@ -14,7 +14,7 @@
         "Control": "C:/Users/Noah/Pictures/Useful/LongLiveTheEmpire/Control.png",
         "Manipulation": "C:/Users/Noah/Pictures/Useful/LongLiveTheEmpire/ManipulationToken.png",
         
-        "Font": "Arial",
+        "Font": "Lato",
         
         "Regular": "0",
         "Bold": "1",
@@ -24,7 +24,7 @@
         "BoldUnderline": "5",
         "ItalicUnderline": "6",
         "BoldItalicUnderline": "7",
-        "Strickout": "8",
+        "Strikeout": "8",
         "BoldStrikeout": "9",
         "ItalicStrikeout": "10",
         "BoldItalicStrikeout": "11",
@@ -37,21 +37,39 @@
     {
         "Width": "674",
         "Height": "1050"
+        
     },
-    "Borders": 
+    "Items": 
     [
         {
+            "Type": "Border",
             "X": "0",
             "Y": "0",
             "Width": "674",
             "Height": "1050",
             "Thickness": "6",
             "Alignment": "Inner"
-        }
-    ],
-    "Texts": 
-    [
+        },
         {
+            "Type": "Image",
+            "Source": "^*Alignment",
+            "Opacity": "0.3",
+            "X": "7",
+            "Y": "195", 
+            "Width": "330",
+            "Height": "330"
+        },
+        {
+            "Type": "Image",
+            "Source": "^*District",
+            "Opacity": "0.3",
+            "X": "337",
+            "Y": "525", 
+            "Width": "330",
+            "Height": "330"
+        },
+        {
+            "Type": "Text",
             "Content": "*Name",
             "Font": "^Font",
             "FontSize": "50",
@@ -63,6 +81,7 @@
             "VerticalTextAlign": "Top"
         },
         {
+            "Type": "Text",
             "Content": "*Action",
             "Font": "^Font",
             "FontSize": "40",
@@ -74,6 +93,7 @@
             "VerticalTextAlign": "Center"
         },
         {
+            "Type": "Text",
             "Content": "*Alignment",
             "Font": "^Font",
             "FontSize": "20",
@@ -85,6 +105,7 @@
             "VerticalTextAlign": "Bottom"
         },
         {
+            "Type": "Text",
             "Content": "*District",
             "Font": "^Font",
             "FontSize": "30",
@@ -94,25 +115,6 @@
             "Width": "600",
             "Height": "50",
             "VerticalTextAlign": "Bottom"
-        }
-    ],
-    "Images": 
-    [
-        {
-            "Source": "^*Alignment",
-            "Opacity": "0.3",
-            "X": "7",
-            "Y": "195", 
-            "Width": "330",
-            "Height": "330"
-        },
-        {
-            "Source": "^*District",
-            "Opacity": "0.3",
-            "X": "337",
-            "Y": "525", 
-            "Width": "330",
-            "Height": "330"
         }
     ]
 }

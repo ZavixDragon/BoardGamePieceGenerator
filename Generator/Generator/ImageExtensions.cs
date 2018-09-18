@@ -8,6 +8,7 @@ namespace Generator
     public static class ImageExtensions
     {
         private const int _bytesPerPixel = 4;
+        private const int _alphaOffset = 3; //_bytesPerPixel - 1
 
         public static Image WithOpacity(this Image img, decimal opacity)
         {
@@ -20,17 +21,8 @@ namespace Generator
             byte[] argbValues = new byte[numBytes];
             Marshal.Copy(ptr, argbValues, 0, numBytes);
             for (int counter = 0; counter < argbValues.Length; counter += _bytesPerPixel)
-            {
-                // argbValues is in format BGRA (Blue, Green, Red, Alpha)
-                // If 100% transparent, skip pixel
-                if (argbValues[counter + _bytesPerPixel - 1] == 0)
-                    continue;
-                int pos = 0;
-                pos++; // B value
-                pos++; // G value
-                pos++; // R value
-                argbValues[counter + pos] = (byte)(argbValues[counter + pos] * opacity);
-            }
+                if (argbValues[counter + _alphaOffset] != 0)
+                    argbValues[counter + _alphaOffset] = (byte)(argbValues[counter + _alphaOffset] * opacity);
             Marshal.Copy(argbValues, 0, ptr, numBytes);
             bitmap.UnlockBits(bmpData);
             return bitmap;

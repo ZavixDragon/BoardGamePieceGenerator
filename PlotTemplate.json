@@ -1,0 +1,394 @@
+{
+    "Path": "C:/Users/Noah/Pictures/Useful/LongLiveTheEmpire/Plots",
+    "Keywords": {
+        "Military District": "C:/Users/Noah/Pictures/Useful/LongLiveTheEmpire/MilitaryDistrict.png", 
+        "Military": "C:/Users/Noah/Pictures/Useful/LongLiveTheEmpire/MilitaryDistrict.png", 
+        "Commercial District": "C:/Users/Noah/Pictures/Useful/LongLiveTheEmpire/CommercialDistrict.png", 
+        "Commercial": "C:/Users/Noah/Pictures/Useful/LongLiveTheEmpire/CommercialDistrict.png", 
+        "Surveillance District": "C:/Users/Noah/Pictures/Useful/LongLiveTheEmpire/SurviellanceDistrict.png",
+        "Surveillance": "C:/Users/Noah/Pictures/Useful/LongLiveTheEmpire/SurviellanceDistrict.png",  
+        "Research District": "C:/Users/Noah/Pictures/Useful/LongLiveTheEmpire/ResearchDistrict.png", 
+        "Research": "C:/Users/Noah/Pictures/Useful/LongLiveTheEmpire/ResearchDistrict.png", 
+        "Intelligence District": "C:/Users/Noah/Pictures/Useful/LongLiveTheEmpire/IntelligenceDistrict.png", 
+        "Intelligence": "C:/Users/Noah/Pictures/Useful/LongLiveTheEmpire/IntelligenceDistrict.png", 
+        "Media District": "C:/Users/Noah/Pictures/Useful/LongLiveTheEmpire/MediaDistrict.png", 
+        "Media": "C:/Users/Noah/Pictures/Useful/LongLiveTheEmpire/MediaDistrict.png", 
+        "Empire": "C:/Users/Noah/Pictures/Useful/LongLiveTheEmpire/Empire.png", 
+        "Rebel": "C:/Users/Noah/Pictures/Useful/LongLiveTheEmpire/Rebel.png", 
+        "Strength": "C:/Users/Noah/Pictures/Useful/LongLiveTheEmpire/Strength.png", 
+        "Wealth": "C:/Users/Noah/Pictures/Useful/LongLiveTheEmpire/Wealth.png", 
+        "Control": "C:/Users/Noah/Pictures/Useful/LongLiveTheEmpire/Control.png",
+        "Manipulation": "C:/Users/Noah/Pictures/Useful/LongLiveTheEmpire/ManipulationToken.png",
+        "Influence": "C:/Users/Noah/Pictures/Useful/LongLiveTheEmpire/Influence.png",
+
+        "Font": "Lato",
+        "Regular": "0",
+        "Bold": "1",
+        "Italic": "2",
+        "BoldItalic": 3,
+        "Underline": "4",
+        "BoldUnderline": "5",
+        "ItalicUnderline": "6",
+        "BoldItalicUnderline": "7",
+        "Strikeout": "8",
+        "BoldStrikeout": "9",
+        "ItalicStrikeout": "10",
+        "BoldItalicStrikeout": "11",
+        "UnderlineStrikeout": "12",
+        "BoldUnderlineStrikeout": "13",
+        "ItalicUnderlineStrikeout": "14",
+        "BoldItalicUnderlineStrikeout": "15",
+
+
+        "FullBorderXOffset": "37",
+        "HalfBorderXOffset": "374",
+
+        "DistrictBorderYOffset": "30",
+        "Req1BorderYOffset": "220",
+        "Req2BorderYOffset": "340",
+        "RewardsHeaderBorderYOffset": "550",
+        "RewardsBorderYOffset": "750",
+
+        "FullBorderWidth": "600",
+        "HalfBorderWidth": "263",
+
+        "HeaderBorderHeight": "70",
+        "ReqBorderHeight": "100",
+        "RewardsBorderHeight": "140",
+
+        "FullTextXOffset": "47",
+        "HalfTextXOffset": "384",
+
+        "DistrictTextYOffset": "45",
+        "Req1TextYOffset": "235",
+        "Req2TextYOffset": "355",
+        "RewardsHeaderTextYOffset": "565",
+        "RewardsTextYOffset": "765",
+
+        "FullTextWidth": "580",
+        "HalfTextWidth": "243",
+
+        "HeaderTextHeight": "50",
+        "ReqTextHeight": "80",
+        "RewardsTextHeight": "120"
+    },
+    "Canvas": 
+    {
+        "Width": "674",
+        "Height": "1050"
+    },
+    "Items": 
+    [
+        {
+            "Type": "Border",
+            "X": "6",
+            "Y": "6",
+            "Width": "331",
+            "Height": "1038",
+            "Thickness": "9",
+            "Color": "2979FF",
+            "Alignment": "Inner"
+        },
+        {
+            "Type": "Border",
+            "X": "337",
+            "Y": "6",
+            "Width": "331",
+            "Height": "1038",
+            "Thickness": "9",
+            "Color": "FF1744",
+            "Alignment": "Inner"
+        },
+        {
+            "Type": "Border",
+            "X": "0",
+            "Y": "0",
+            "Width": "674",
+            "Height": "1050",
+            "Thickness": "6",
+            "Alignment": "Inner"
+        },
+        {
+            "Type": "Image",
+            "Source": "^Empire",
+            "Opacity": "0.4",
+            "X": "7",
+            "Y": "20", 
+            "Width": "330",
+            "Height": "330"
+        },
+        {
+            "Type": "Image",
+            "Source": "^Rebel",
+            "Opacity": "0.4",
+            "X": "337",
+            "Y": "20", 
+            "Width": "330",
+            "Height": "330"
+        },
+        {
+            "Type": "Image",
+            "Source": "^*District",
+            "Opacity": "0.4",
+            "X": "87",
+            "Y": "375", 
+            "Width": "500",
+            "Height": "500"
+        },
+
+
+        {
+            "Type": "Border",
+            "X": "^FullBorderXOffset",
+            "Y": "^DistrictBorderYOffset",
+            "Width": "^FullBorderWidth",
+            "Height": "^HeaderBorderHeight",
+            "Thickness": "3",
+            "Alignment": "Outer"
+        },
+        {
+            "Type": "Text",
+            "Content": "*District",
+            "Font": "^Font",
+            "FontSize": "40",
+            "FontStyle": "^Bold",
+            "X": "^FullTextXOffset",
+            "Y": "^DistrictTextYOffset", 
+            "Width": "^FullTextWidth",
+            "Height": "^HeaderTextHeight",
+            "VerticalTextAlign": "Top"
+        },
+
+
+        {
+            "Type": "Border",
+            "X": "^FullBorderXOffset",
+            "Y": "^Req1BorderYOffset",
+            "Width": "^FullBorderWidth",
+            "Height": "^ReqBorderHeight",
+            "Thickness": "3",
+            "Alignment": "Outer",
+            "Enabled": "*Req1Enabled"
+        },
+        {
+            "Type": "Text",
+            "Content": "*Req1",
+            "Font": "^Font",
+            "FontSize": "30",
+            "FontStyle": "^Bold",
+            "X": "^FullTextXOffset",
+            "Y": "^Req1TextYOffset", 
+            "Width": "^FullTextWidth",
+            "Height": "^ReqTextHeight",
+            "Enabled": "*Req1Enabled"
+        },
+
+        {
+            "Type": "Border",
+            "X": "^FullBorderXOffset",
+            "Y": "^Req1BorderYOffset",
+            "Width": "^HalfBorderWidth",
+            "Height": "^ReqBorderHeight",
+            "Thickness": "3",
+            "Alignment": "Outer",
+            "Enabled": "*Req1SplitEnabled"
+        },
+        {
+            "Type": "Text",
+            "Content": "*Req1Empire",
+            "Font": "^Font",
+            "FontSize": "30",
+            "FontStyle": "^Bold",
+            "X": "^FullTextXOffset",
+            "Y": "^Req1TextYOffset", 
+            "Width": "^HalfTextWidth",
+            "Height": "^ReqTextHeight",
+            "Enabled": "*Req1SplitEnabled"
+        },
+
+        {
+            "Type": "Border",
+            "X": "^HalfBorderXOffset",
+            "Y": "^Req1BorderYOffset",
+            "Width": "^HalfBorderWidth",
+            "Height": "^ReqBorderHeight",
+            "Thickness": "3",
+            "Alignment": "Outer",
+            "Enabled": "*Req1SplitEnabled"
+        },
+        {
+            "Type": "Text",
+            "Content": "*Req1Rebel",
+            "Font": "^Font",
+            "FontSize": "30",
+            "FontStyle": "^Bold",
+            "X": "^HalfTextXOffset",
+            "Y": "^Req1TextYOffset", 
+            "Width": "^HalfTextWidth",
+            "Height": "^ReqTextHeight",
+            "Enabled": "*Req1SplitEnabled"
+        },
+
+
+        {
+            "Type": "Border",
+            "X": "^FullBorderXOffset",
+            "Y": "^Req2BorderYOffset", 
+            "Width": "^FullBorderWidth",
+            "Height": "^ReqBorderHeight",
+            "Thickness": "3",
+            "Alignment": "Outer",
+            "Enabled": "*Req2Enabled"
+        },
+        {
+            "Type": "Text",
+            "Content": "*Req2",
+            "Font": "^Font",
+            "FontSize": "30",
+            "FontStyle": "^Bold",
+            "X": "^FullTextXOffset",
+            "Y": "^Req2TextYOffset", 
+            "Width": "^FullTextWidth",
+            "Height": "^ReqTextHeight",
+            "Enabled": "*Req2Enabled"
+        },
+
+        {
+            "Type": "Border",
+            "X": "^FullBorderXOffset",
+            "Y": "^Req2BorderYOffset", 
+            "Width": "^HalfBorderWidth",
+            "Height": "^ReqBorderHeight",
+            "Thickness": "3",
+            "Alignment": "Outer",
+            "Enabled": "*Req2SplitEnabled"
+        },
+        {
+            "Type": "Text",
+            "Content": "*Req2Empire",
+            "Font": "^Font",
+            "FontSize": "30",
+            "FontStyle": "^Bold",
+            "X": "^FullTextXOffset",
+            "Y": "^Req2TextYOffset", 
+            "Width": "^HalfTextWidth",
+            "Height": "^ReqTextHeight",
+            "Enabled": "*Req2SplitEnabled"
+        },
+
+        {
+            "Type": "Border",
+            "X": "^HalfBorderXOffset",
+            "Y": "^Req2BorderYOffset", 
+            "Width": "^HalfBorderWidth",
+            "Height": "^ReqBorderHeight",
+            "Thickness": "3",
+            "Alignment": "Outer",
+            "Enabled": "*Req2SplitEnabled"
+        },
+        {
+            "Type": "Text",
+            "Content": "*Req2Rebel",
+            "Font": "^Font",
+            "FontSize": "30",
+            "FontStyle": "^Bold",
+            "X": "^HalfTextXOffset",
+            "Y": "^Req2TextYOffset", 
+            "Width": "^HalfTextWidth",
+            "Height": "^ReqTextHeight",
+            "Enabled": "*Req2SplitEnabled"
+        },
+
+
+        {
+            "Type": "Border",
+            "X": "^FullBorderXOffset",
+            "Y": "^RewardsHeaderBorderYOffset", 
+            "Width": "^FullBorderWidth",
+            "Height": "^HeaderBorderHeight",
+            "Thickness": "3",
+            "Alignment": "Outer"
+        },
+        {
+            "Type": "Text",
+            "Content": "Rewards",
+            "Font": "^Font",
+            "FontSize": "40",
+            "FontStyle": "^Bold",
+            "X": "^FullTextXOffset",
+            "Y": "^RewardsHeaderTextYOffset", 
+            "Width": "^FullTextWidth",
+            "Height": "^HeaderTextHeight"
+        },
+
+
+        {
+            "Type": "Border",
+            "X": "^FullBorderXOffset",
+            "Y": "^RewardsBorderYOffset",
+            "Width": "^FullBorderWidth",
+            "Height": "^RewardsBorderHeight",
+            "Thickness": "3",
+            "Alignment": "Outer",
+            "Enabled": "*RewardsEnabled"
+        },
+        {
+            "Type": "Text",
+            "Content": "*Rewards",
+            "Font": "^Font",
+            "FontSize": "30",
+            "FontStyle": "^Bold",
+            "X": "^FullTextXOffset",
+            "Y": "^RewardsTextYOffset", 
+            "Width": "^FullTextWidth",
+            "Height": "^RewardsTextHeight",
+            "Enabled": "*RewardsEnabled"
+        },
+
+        {
+            "Type": "Border",
+            "X": "^FullBorderXOffset",
+            "Y": "^RewardsBorderYOffset",
+            "Width": "^HalfBorderWidth",
+            "Height": "^RewardsBorderHeight",
+            "Thickness": "3",
+            "Alignment": "Outer",
+            "Enabled": "*RewardsSplitEnabled"
+        },
+        {
+            "Type": "Text",
+            "Content": "*RewardsEmpire",
+            "Font": "^Font",
+            "FontSize": "30",
+            "FontStyle": "^Bold",
+            "X": "^FullTextXOffset",
+            "Y": "^RewardsTextYOffset", 
+            "Width": "^HalfTextWidth",
+            "Height": "^RewardsTextHeight",
+            "Enabled": "*RewardsSplitEnabled"
+        },
+
+        {
+            "Type": "Border",
+            "X": "^HalfBorderXOffset",
+            "Y": "^RewardsBorderYOffset",
+            "Width": "^HalfBorderWidth",
+            "Height": "^RewardsBorderHeight",
+            "Thickness": "3",
+            "Alignment": "Outer",
+            "Enabled": "*RewardsSplitEnabled"
+        },
+        {
+            "Type": "Text",
+            "Content": "*RewardsRebel",
+            "Font": "^Font",
+            "FontSize": "30",
+            "FontStyle": "^Bold",
+            "X": "^HalfTextXOffset",
+            "Y": "^RewardsTextYOffset", 
+            "Width": "^HalfTextWidth",
+            "Height": "^RewardsTextHeight",
+            "Enabled": "*RewardsSplitEnabled"
+        }
+    ]
+}

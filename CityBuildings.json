@@ -16,14 +16,14 @@
     {
         "FileName": "EliteTaskForceHeadquarters-Empire.png",
         "Name": "Elite Task Force Headquarters",
-        "Action": "Move the Emperor to a different room and the Emperor takes an action",
+        "Action": "Move the Emperor to a different room and the Emperor takes an Action",
         "Alignment": "Empire",
         "District": "Military District"
     },
     {
         "FileName": "EliteTaskForceHeadquarters-Rebel.png",
         "Name": "Elite Task Force Headquarters",
-        "Action": "Move the Emperor to a different room and the Emperor takes an action",
+        "Action": "Move the Emperor to a different room and the Emperor takes a Rebel Action",
         "Alignment": "Rebel",
         "District": "Military District"
     },
@@ -184,14 +184,14 @@
     {
         "FileName": "BlackOpsDivision-Empire.png",
         "Name": "Black Ops Division",
-        "Action": "Move the Emperor to a different room and the Emperor takes an action",
+        "Action": "Move the Emperor to a different room and the Emperor takes an Action",
         "Alignment": "Empire",
         "District": "Intelligence District"
     },
     {
         "FileName": "BlackOpsDivision-Rebel.png",
         "Name": "Black Ops Division",
-        "Action": "Move the Emperor to a different room and the Emperor takes an action",
+        "Action": "Move the Emperor to a different room and the Emperor takes a Rebel Action",
         "Alignment": "Rebel",
         "District": "Intelligence District"
     },

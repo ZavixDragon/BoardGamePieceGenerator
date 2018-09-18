@@ -46,6 +46,16 @@ namespace Generator
             return decimal.Parse(GetRootValue(baseObj.GetPropertyValue(key)));
         }
 
+        public bool GetBoolOrDefault(JObject baseObj, string key, bool defaultValue)
+        {
+            return baseObj.ContainsKey(key) ? GetBool(baseObj, key) : defaultValue;
+        }
+
+        public bool GetBool(JObject baseObj, string key)
+        {
+            return bool.Parse(GetRootValue(baseObj.GetPropertyValue(key)));
+        }
+
         public Color GetColorOrDefault(JObject baseObj, string key, Color defaultValue)
         {
             return baseObj.ContainsKey(key) ? GetColor(baseObj, key) : defaultValue;

@@ -40,7 +40,8 @@ namespace Generator
 
         public void Apply(Graphics graphics)
         {
-            var font = new Font(new FontFamily(Font), FontSize, FontStyle);
+            var fontFamily = new FontFamily(Font); 
+            var font = new Font(fontFamily, FontSize, FontStyle);
             var spaceWidth = (int)Math.Floor(graphics.MeasureString(" ", font).Width);
             var textLines = new TextLines(Width, font, spaceWidth, HorizontalTextAlignment);
             Content.Split(' ').ToList().ForEach(x =>
@@ -48,7 +49,7 @@ namespace Generator
                 if (x == "\n")
                     textLines.NewLine();
                 else if (x.StartsWith("{"))
-                    textLines.Add(new Symbol(x, graphics, font, _interpreter));
+                    textLines.Add(new Symbol(x, graphics, _interpreter, font, fontFamily, FontStyle));
                 else 
                     textLines.Add(new Word(x, font, graphics, Color, spaceWidth));
             });
@@ -160,7 +161,7 @@ namespace Generator
             _graphics.DrawString(_content,
                 _font,
                 new SolidBrush(_color),
-                new RectangleF(x, y, Width + 1 + _spaceWidth, _font.Height * 2),
+                new RectangleF(x - _spaceWidth / 2, y, Width + 1 + _spaceWidth, _font.Height * 2),
                 new StringFormat
                 {
                     Trimming = StringTrimming.None,
@@ -175,11 +176,12 @@ namespace Generator
         private readonly Graphics _graphics;
         public int Width { get; }
 
-        public Symbol(string symbol, Graphics graphics, Font font, CustomJInterpreter interpreter)
+        public Symbol(string symbol, Graphics graphics, CustomJInterpreter interpreter, Font font, FontFamily fontFamily, FontStyle fontStyle)
         {
             _image = interpreter.GetRootValue(symbol.Substring(1, symbol.Length - 2));
             _graphics = graphics;
-            Width = font.Height;
+            var lineSpacing = font.Size * fontFamily.GetLineSpacing(fontStyle) / fontFamily.GetEmHeight(fontStyle);
+            Width = (int)Math.Ceiling(lineSpacing);
         }
 
         public void Draw(int x, int y) => _graphics.DrawImage(Image.FromFile(_image), new Rectangle(x, y, Width, Width));
