@@ -1,0 +1,116 @@
+[
+    {
+        "FileName": "Special1.png",
+        "IsSpecial": "true",
+        "Special": "Blue Agent takes Building Action",
+        "IsBasic": "false"
+    },
+    {
+        "FileName": "Special2.png",
+        "IsSpecial": "true",
+        "Special": "Red Agent takes Building Action",
+        "IsBasic": "false"
+    },
+    {
+        "FileName": "Special3.png",
+        "IsSpecial": "true",
+        "Special": "Green Agent takes Building Action",
+        "IsBasic": "false"
+    },
+    {
+        "FileName": "Special4.png",
+        "IsSpecial": "true",
+        "Special": "Move Blue Agent to Unoccupied Location",
+        "IsBasic": "false"
+    },
+    {
+        "FileName": "Special5.png",
+        "IsSpecial": "true",
+        "Special": "Move Red Agent to Unoccupied Location",
+        "IsBasic": "false"
+    },
+    {
+        "FileName": "Special6.png",
+        "IsSpecial": "true",
+        "Special": "Move Green Agent to Unoccupied Location",
+        "IsBasic": "false"
+    },
+    {
+        "FileName": "Special7.png",
+        "IsSpecial": "true",
+        "Special": "Remove the next card from the Queue",
+        "IsBasic": "false"
+    },
+    {
+        "FileName": "Special8.png",
+        "IsSpecial": "true",
+        "Special": "Repeat the last card’s effect including all modifiers",
+        "IsBasic": "false"
+    },
+    {
+        "FileName": "Special9.png",
+        "IsSpecial": "true",
+        "Special": "Double the next Basic card",
+        "IsBasic": "false"
+    },
+    {
+        "FileName": "Special10.png",
+        "IsSpecial": "true",
+        "Special": "Reverse the effect of the next Basic card",
+        "IsBasic": "false"
+    },
+    {
+        "FileName": "Special11.png",
+        "IsSpecial": "true",
+        "Special": "If Emperor is in {^Control} Room, Move Emperor to any other Room \n Else Move the Emperor to the {^Control} Room",
+        "IsBasic": "false"
+    },
+    {
+        "FileName": "Special12.png",
+        "IsSpecial": "true",
+        "Special": "If Emperor is in {^Strength} Room, Move Emperor to any other Room \n Else Move the Emperor to the {^Strength} Room",
+        "IsBasic": "false"
+    },
+    {
+        "FileName": "Special13.png",
+        "IsSpecial": "true",
+        "Special": "If Emperor is in {^Wealth} Room, Move Emperor to any other Room \n Else Move the Emperor to the {^Wealth} Room",
+        "IsBasic": "false"
+    },
+    {
+        "FileName": "Basic1.png",
+        "IsSpecial": "false",
+        "IsBasic": "true",
+        "Basic": "+2 {^Control}"
+    },
+    {
+        "FileName": "Basic2.png",
+        "IsSpecial": "false",
+        "IsBasic": "true",
+        "Basic": "-2 {^Control}"
+    },
+    {
+        "FileName": "Basic3.png",
+        "IsSpecial": "false",
+        "IsBasic": "true",
+        "Basic": "+2 {^Strength}"
+    },
+    {
+        "FileName": "Basic4.png",
+        "IsSpecial": "false",
+        "IsBasic": "true",
+        "Basic": "-2 {^Strength}"
+    },
+    {
+        "FileName": "Basic5.png",
+        "IsSpecial": "false",
+        "IsBasic": "true",
+        "Basic": "+2 {^Wealth}"
+    },
+    {
+        "FileName": "Basic6.png",
+        "IsSpecial": "false",
+        "IsBasic": "true",
+        "Basic": "-2 {^Wealth}"
+    }
+]

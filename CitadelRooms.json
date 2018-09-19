@@ -1,0 +1,99 @@
+[
+    {
+        "FileName": "WarRoom.png",
+        "Room": "Strength",
+        "Name": "War Room",
+        "Passive": "+3 {^BaseStrength}",
+        "Action": "Reset {^Strength} to {^BaseStrength}",
+        "RebelAction": "Prevent all {^Strength} gain from non-plots for the rest of the turn"
+    },
+    {
+        "FileName": "TacticsRoom.png",
+        "Room": "Strength",
+        "Name": "Tactics Room",
+        "Passive": "Adds 1 to all positive Basic {^Strength} cards",
+        "Action": "-1 {^Control} \n -1 {^Wealth} \n +5 {^Strength}",
+        "RebelAction": "Triple the next {^Strength} loss this turn"
+    },
+    {
+        "FileName": "OrbitalCannonControls.png",
+        "Room": "Strength",
+        "Name": "Orbital Cannon Controls",
+        "Passive": "Adds 1 to all negative Basic {^Strength} cards (e.g. -2 becomes -1)",
+        "Action": "Prevent all {^Strength} loss from non-plots for the rest of the turn",
+        "RebelAction": "Reset {^Strength} to {^BaseStrength}"
+    },
+    {
+        "FileName": "SecretMilitaryExperiment.png",
+        "Room": "Strength",
+        "Name": "Secret Military Experiment",
+        "Passive": "Anyone who plays a positive Basic {^Strength} card, gains 1 {^Manipulation}",
+        "Action": "Triple the next {^Strength} gain this turn",
+        "RebelAction": "+1 {^Control} \n +1 {^Wealth} \n -5 {^Strength}"
+    },
+    {
+        "FileName": "MassiveSurveillanceRoom.png",
+        "Room": "Control",
+        "Name": "Massive Surveillance Room",
+        "Passive": "Adds 1 to all negative Basic {^Control} cards (e.g. -2 becomes -1)",
+        "Action": "Prevent all {^Control} loss from non-plots for the rest of the turn",
+        "RebelAction": "Triple the next {^Control} loss this turn"
+    },
+    {
+        "FileName": "PropagandaPlanningRoom.png",
+        "Room": "Control",
+        "Name": "Propaganda Planning Room",
+        "Passive": "Anyone who plays a positive Basic {^Control} card, gains 1 {^Manipulation}",
+        "Action": "-1 {^Strength} \n -1 {^Wealth} \n +5 {^Control}",
+        "RebelAction": "Reset {^Control} to {^BaseControl}"
+    },
+    {
+        "FileName": "MindInfluencingDevice.png",
+        "Room": "Control",
+        "Name": "Mind Influencing Device",
+        "Passive": "+3 {^BaseControl}",
+        "Action": "Reset {^Control} to {^BaseControl}",
+        "RebelAction": "Prevent all {^Control} gain from non-plots for the rest of the turn"
+    },
+    {
+        "FileName": "BlackmailVault.png",
+        "Room": "Control",
+        "Name": "Blackmail Vault",
+        "Passive": "Adds 1 to all positive Basic {^Control} cards",
+        "Action": "Triple the next {^Control} gain this turn",
+        "RebelAction": "+1 {^Strength} \n +1 {^Wealth} \n -5 {^Control}"
+    },
+
+    {
+        "FileName": "RoyalVault.png",
+        "Room": "Wealth",
+        "Name": "Royal Vault",
+        "Passive": "+3 {^BaseWealth}",
+        "Action": "Reset {^Wealth} to {^BaseWealth}",
+        "RebelAction": "+1 {^Control} \n +1 {^Strength} \n -5 {^Wealth}"
+    },
+    {
+        "FileName": "BusinessAcquisitionPlanner.png",
+        "Room": "Wealth",
+        "Name": "Business Acquistion Planner",
+        "Passive": "Adds 1 to all positive Basic {^Wealth} cards",
+        "Action": "Triple the next {^Wealth} gain this turn",
+        "RebelAction": "Reset {^Wealth} to {^BaseWealth}"
+    },
+    {
+        "FileName": "IllegalMarketsRoom.png",
+        "Room": "Wealth",
+        "Name": "Illegal Markets Room",
+        "Passive": "Adds 1 to all negative Basic {^Wealth} cards (e.g. -2 becomes -1)",
+        "Action": "Prevent all {^Wealth} loss from non-plots for the rest of the turn",
+        "RebelAction": "Triple the next {^Wealth} loss this turn"
+    },
+    {
+        "FileName": "CorruptBribesEvaluationRoom.png",
+        "Room": "Wealth",
+        "Name": "Corrupt Bribes Evaluation Room",
+        "Passive": "Anyone who plays a positive Basic {^Wealth} card, gains 1 {^Manipulation}",
+        "Action": "-1 {^Strength} \n -1 {^Control} \n +5 {^Wealth}",
+        "RebelAction": "Prevent all {^Wealth} gain from non-plots for the rest of the turn"
+    }
+]

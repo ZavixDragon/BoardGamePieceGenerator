@@ -1,0 +1,56 @@
+{
+    "Path": "C:/Users/Noah/Pictures/Useful/LongLiveTheEmpire/Moves",
+    "Keywords": {
+        "Strength": "C:/Users/Noah/Pictures/Useful/LongLiveTheEmpire/Strength.png", 
+        "Wealth": "C:/Users/Noah/Pictures/Useful/LongLiveTheEmpire/Wealth.png", 
+        "Control": "C:/Users/Noah/Pictures/Useful/LongLiveTheEmpire/Control.png",
+        
+        "Font": "Lato",
+        "Regular": "0",
+        "Bold": "1"
+    },
+    "Canvas": 
+    {
+        "Width": "674",
+        "Height": "1050"
+    },
+    "Items": 
+    [
+        {
+            "Type": "Text",
+            "Content": "*Special",
+            "Font": "^Font",
+            "FontSize": "50",
+            "FontStyle": "^Bold",
+            "X": "37",
+            "Y": "25", 
+            "Width": "600",
+            "Height": "1000",
+            "Enabled": "*IsSpecial"
+        },
+        {
+            "Type": "Text",
+            "Content": "*Basic",
+            "Font": "^Font",
+            "FontSize": "100",
+            "FontStyle": "^Bold",
+            "X": "37",
+            "Y": "25", 
+            "Width": "600",
+            "Height": "1000",
+            "Enabled": "*IsBasic"
+        },
+        {
+            "Type": "Text",
+            "Content": "Basic",
+            "Font": "^Font",
+            "FontSize": "40",
+            "FontStyle": "^Bold",
+            "X": "37",
+            "Y": "990", 
+            "Width": "600",
+            "Height": "50",
+            "Enabled": "*IsBasic"
+        }
+    ]
+}

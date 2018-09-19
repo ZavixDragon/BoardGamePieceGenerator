@@ -1,17 +1,14 @@
 {
-    "Path": "C:/Users/Noah/Pictures/Useful/LongLiveTheEmpire/CityBuildings",
+    "Path": "C:/Users/Noah/Pictures/Useful/LongLiveTheEmpire/CitadelRooms",
     "Keywords": {
-        "Military District": "C:/Users/Noah/Pictures/Useful/LongLiveTheEmpire/MilitaryDistrict.png", 
-        "Commercial District": "C:/Users/Noah/Pictures/Useful/LongLiveTheEmpire/CommercialDistrict.png", 
-        "Surveillance District": "C:/Users/Noah/Pictures/Useful/LongLiveTheEmpire/SurviellanceDistrict.png", 
-        "Research District": "C:/Users/Noah/Pictures/Useful/LongLiveTheEmpire/ResearchDistrict.png", 
-        "Intelligence District": "C:/Users/Noah/Pictures/Useful/LongLiveTheEmpire/IntelligenceDistrict.png", 
-        "Media District": "C:/Users/Noah/Pictures/Useful/LongLiveTheEmpire/MediaDistrict.png", 
         "Empire": "C:/Users/Noah/Pictures/Useful/LongLiveTheEmpire/Empire.png", 
         "Rebel": "C:/Users/Noah/Pictures/Useful/LongLiveTheEmpire/Rebel.png", 
         "Strength": "C:/Users/Noah/Pictures/Useful/LongLiveTheEmpire/Strength.png", 
+        "BaseStrength": "C:/Users/Noah/Pictures/Useful/LongLiveTheEmpire/BaseStrength.png", 
         "Wealth": "C:/Users/Noah/Pictures/Useful/LongLiveTheEmpire/Wealth.png", 
+        "BaseWealth": "C:/Users/Noah/Pictures/Useful/LongLiveTheEmpire/BaseWealth.png", 
         "Control": "C:/Users/Noah/Pictures/Useful/LongLiveTheEmpire/Control.png",
+        "BaseControl": "C:/Users/Noah/Pictures/Useful/LongLiveTheEmpire/BaseControl.png",
         "Manipulation": "C:/Users/Noah/Pictures/Useful/LongLiveTheEmpire/ManipulationToken.png",
         
         "Font": "Lato",
@@ -36,21 +33,12 @@
         },
         {
             "Type": "Image",
-            "Source": "^*Alignment",
+            "Source": "^*Room",
             "Opacity": "0.4",
-            "X": "7",
-            "Y": "195", 
-            "Width": "330",
-            "Height": "330"
-        },
-        {
-            "Type": "Image",
-            "Source": "^*District",
-            "Opacity": "0.4",
-            "X": "337",
-            "Y": "525", 
-            "Width": "330",
-            "Height": "330"
+            "X": "37",
+            "Y": "225", 
+            "Width": "600",
+            "Height": "600"
         },
         {
             "Type": "Text",
@@ -61,44 +49,74 @@
             "X": "37",
             "Y": "30", 
             "Width": "600",
-            "Height": "1000",
+            "Height": "120",
             "VerticalTextAlign": "Top"
+        },
+        {
+            "Type": "Text",
+            "Content": "Passive",
+            "Font": "^Font",
+            "FontSize": "40",
+            "FontStyle": "^Bold",
+            "X": "37",
+            "Y": "210", 
+            "Width": "600",
+            "Height": "50"
+        },
+        {
+            "Type": "Text",
+            "Content": "*Passive",
+            "Font": "^Font",
+            "FontSize": "30",
+            "FontStyle": "^Bold",
+            "X": "37",
+            "Y": "280", 
+            "Width": "600",
+            "Height": "120"
+        },
+        {
+            "Type": "Text",
+            "Content": "Action",
+            "Font": "^Font",
+            "FontSize": "40",
+            "FontStyle": "^Bold",
+            "X": "37",
+            "Y": "460", 
+            "Width": "600",
+            "Height": "50"
         },
         {
             "Type": "Text",
             "Content": "*Action",
             "Font": "^Font",
+            "FontSize": "30",
+            "FontStyle": "^Bold",
+            "X": "37",
+            "Y": "530", 
+            "Width": "600",
+            "Height": "120"
+        },
+        {
+            "Type": "Text",
+            "Content": "Rebel Action",
+            "Font": "^Font",
             "FontSize": "40",
             "FontStyle": "^Bold",
             "X": "37",
-            "Y": "25", 
+            "Y": "760", 
             "Width": "600",
-            "Height": "1000",
-            "VerticalTextAlign": "Center"
+            "Height": "50"
         },
         {
             "Type": "Text",
-            "Content": "*Alignment",
-            "Font": "^Font",
-            "FontSize": "20",
-            "FontStyle": "^Bold",
-            "X": "37",
-            "Y": "925", 
-            "Width": "600",
-            "Height": "50",
-            "VerticalTextAlign": "Bottom"
-        },
-        {
-            "Type": "Text",
-            "Content": "*District",
+            "Content": "*RebelAction",
             "Font": "^Font",
             "FontSize": "30",
             "FontStyle": "^Bold",
             "X": "37",
-            "Y": "975", 
+            "Y": "830", 
             "Width": "600",
-            "Height": "50",
-            "VerticalTextAlign": "Bottom"
+            "Height": "120"
         }
     ]
 }

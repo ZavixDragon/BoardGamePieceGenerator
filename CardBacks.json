@@ -1,0 +1,22 @@
+[
+    {
+        "FileName": "Plot.png",
+        "Back": "Plot"
+    },
+    {
+        "FileName": "RedCitadelRoom.png",
+        "Back": "{^Strength} Citadel Room"
+    },
+    {
+        "FileName": "GreenCitadelRoom.png",
+        "Back": "{^Wealth} Citadel Room"
+    },
+    {
+        "FileName": "BlueCitadelRoom.png",
+        "Back": "{^Control} Citadel Room"
+    },
+    {
+        "FileName": "Maneuver.png",
+        "Back": "Maneuver"
+    }
+]

@@ -1,0 +1,733 @@
+{
+    "Path": "C:/Users/Noah/Pictures/Useful/LongLiveTheEmpire/PlayerBoards",
+    "Keywords": {
+        "Military": "C:/Users/Noah/Pictures/Useful/LongLiveTheEmpire/MilitaryDistrict.png", 
+        "Commercial": "C:/Users/Noah/Pictures/Useful/LongLiveTheEmpire/CommercialDistrict.png", 
+        "Surveillance": "C:/Users/Noah/Pictures/Useful/LongLiveTheEmpire/SurviellanceDistrict.png",  
+        "Research": "C:/Users/Noah/Pictures/Useful/LongLiveTheEmpire/ResearchDistrict.png", 
+        "Intelligence": "C:/Users/Noah/Pictures/Useful/LongLiveTheEmpire/IntelligenceDistrict.png", 
+        "Empire": "C:/Users/Noah/Pictures/Useful/LongLiveTheEmpire/Empire.png", 
+        "Rebel": "C:/Users/Noah/Pictures/Useful/LongLiveTheEmpire/Rebel.png", 
+        "Strength": "C:/Users/Noah/Pictures/Useful/LongLiveTheEmpire/Strength.png", 
+        "Wealth": "C:/Users/Noah/Pictures/Useful/LongLiveTheEmpire/Wealth.png", 
+        "Control": "C:/Users/Noah/Pictures/Useful/LongLiveTheEmpire/Control.png",
+        "Influence": "C:/Users/Noah/Pictures/Useful/LongLiveTheEmpire/Influence.png",
+        "Agent": "C:/Users/Noah/Pictures/Useful/LongLiveTheEmpire/Agent.png",
+        
+        "Font": "Lato",
+        "Regular": "0",
+        "Bold": "1",
+
+        "ReqWidth": "210",
+        "ReqBorderHeight": "160",
+        "ReqBorderThickness": "3",
+        "ReqInfluenceHeight": "40",
+        "ReqTextHeight": "80",
+        "EmpireControl": "Empire {^Empire} Controlled",
+        "RebelControl": "Rebel {^Rebel} Controlled"
+    },
+    "Canvas": 
+    {
+        "Width": "2550",
+        "Height": "1650"
+    },
+    "Items": 
+    [
+        {
+            "Type": "Image",
+            "Source": "C:/Users/Noah/Pictures/Useful/LongLiveTheEmpire/Role.png",
+            "X": "0",
+            "Y": "0", 
+            "Width": "2550",
+            "Height": "1650"
+        },
+        {
+            "Type": "Border",
+            "X": "0",
+            "Y": "0",
+            "Width": "2550",
+            "Height": "1650",
+            "Thickness": "9",
+            "Alignment": "Inner"
+        },
+        {
+            "Type": "Text",
+            "Content": "*Name",
+            "Font": "^Font",
+            "FontSize": "100",
+            "FontStyle": "^Bold",
+            "X": "0",
+            "Y": "30", 
+            "Width": "2550",
+            "Height": "110"
+        },
+        {
+            "Type": "Text",
+            "Content": "*Flavor",
+            "Font": "^Font",
+            "FontSize": "30",
+            "FontStyle": "^Bold",
+            "X": "900",
+            "Y": "150", 
+            "Width": "1600",
+            "Height": "160",
+            "VerticalTextAlign": "Top"
+        },
+
+
+        {
+            "Type": "Border",
+            "X": "670",
+            "Y": "385",
+            "Width": "^ReqWidth",
+            "Height": "^ReqBorderHeight",
+            "Thickness": "^ReqBorderThickness",
+            "Alignment": "Outer"
+        },
+        {
+            "Type": "Rectangle",
+            "X": "670",
+            "Y": "444",
+            "Width": "^ReqWidth",
+            "Height": "^ReqBorderThickness"
+        },
+        {
+            "Type": "Text",
+            "Content": "*MilitaryInfluence",
+            "Font": "^Font",
+            "FontSize": "30",
+            "FontStyle": "^Bold",
+            "X": "670",
+            "Y": "400", 
+            "Width": "^ReqWidth",
+            "Height": "^ReqInfluenceHeight"
+        },
+        {
+            "Type": "Text",
+            "Content": "*MilitaryReq",
+            "Font": "^Font",
+            "FontSize": "30",
+            "FontStyle": "^Bold",
+            "X": "670",
+            "Y": "460", 
+            "Width": "^ReqWidth",
+            "Height": "^ReqTextHeight"
+        },
+
+        {
+            "Type": "Border",
+            "X": "890",
+            "Y": "485",
+            "Width": "^ReqWidth",
+            "Height": "^ReqBorderHeight",
+            "Thickness": "^ReqBorderThickness",
+            "Alignment": "Outer",
+            "Enabled": "*MilitaryAgentPresent"
+        },
+        {
+            "Type": "Rectangle",
+            "X": "890",
+            "Y": "544",
+            "Width": "^ReqWidth",
+            "Height": "^ReqBorderThickness",
+            "Enabled": "*MilitaryAgentPresent"
+        },
+        {
+            "Type": "Text",
+            "Content": "*MilitaryAgentInfluence",
+            "Font": "^Font",
+            "FontSize": "30",
+            "FontStyle": "^Bold",
+            "X": "890",
+            "Y": "500", 
+            "Width": "^ReqWidth",
+            "Height": "^ReqInfluenceHeight",
+            "Enabled": "*MilitaryAgentPresent"
+        },
+        {
+            "Type": "Text",
+            "Content": "Agent {^Agent} Present",
+            "Font": "^Font",
+            "FontSize": "30",
+            "FontStyle": "^Bold",
+            "X": "890",
+            "Y": "560", 
+            "Width": "^ReqWidth",
+            "Height": "^ReqTextHeight",
+            "Enabled": "*MilitaryAgentPresent"
+        },
+
+
+        {
+            "Type": "Border",
+            "X": "985",
+            "Y": "735",
+            "Width": "^ReqWidth",
+            "Height": "^ReqBorderHeight",
+            "Thickness": "^ReqBorderThickness",
+            "Alignment": "Outer"
+        },
+        {
+            "Type": "Rectangle",
+            "X": "985",
+            "Y": "794",
+            "Width": "^ReqWidth",
+            "Height": "^ReqBorderThickness"
+        },
+        {
+            "Type": "Text",
+            "Content": "*ResearchInfluence",
+            "Font": "^Font",
+            "FontSize": "30",
+            "FontStyle": "^Bold",
+            "X": "985",
+            "Y": "750", 
+            "Width": "^ReqWidth",
+            "Height": "^ReqInfluenceHeight"
+        },
+        {
+            "Type": "Text",
+            "Content": "*ResearchReq",
+            "Font": "^Font",
+            "FontSize": "30",
+            "FontStyle": "^Bold",
+            "X": "985",
+            "Y": "810", 
+            "Width": "^ReqWidth",
+            "Height": "^ReqTextHeight"
+        },
+
+        {
+            "Type": "Border",
+            "X": "985",
+            "Y": "915",
+            "Width": "^ReqWidth",
+            "Height": "^ReqBorderHeight",
+            "Thickness": "^ReqBorderThickness",
+            "Alignment": "Outer",
+            "Enabled": "*ResearchAgentPresent"
+        },
+        {
+            "Type": "Rectangle",
+            "X": "985",
+            "Y": "974",
+            "Width": "^ReqWidth",
+            "Height": "^ReqBorderThickness",
+            "Enabled": "*ResearchAgentPresent"
+        },
+        {
+            "Type": "Text",
+            "Content": "*ResearchAgentInfluence",
+            "Font": "^Font",
+            "FontSize": "30",
+            "FontStyle": "^Bold",
+            "X": "985",
+            "Y": "930", 
+            "Width": "^ReqWidth",
+            "Height": "^ReqInfluenceHeight",
+            "Enabled": "*ResearchAgentPresent"
+        },
+        {
+            "Type": "Text",
+            "Content": "Agent {^Agent} Present",
+            "Font": "^Font",
+            "FontSize": "30",
+            "FontStyle": "^Bold",
+            "X": "985",
+            "Y": "990", 
+            "Width": "^ReqWidth",
+            "Height": "^ReqTextHeight",
+            "Enabled": "*ResearchAgentPresent"
+        },
+
+
+        {
+            "Type": "Border",
+            "X": "670",
+            "Y": "1275",
+            "Width": "^ReqWidth",
+            "Height": "^ReqBorderHeight",
+            "Thickness": "^ReqBorderThickness",
+            "Alignment": "Outer"
+        },
+        {
+            "Type": "Rectangle",
+            "X": "670",
+            "Y": "1334",
+            "Width": "^ReqWidth",
+            "Height": "^ReqBorderThickness"
+        },
+        {
+            "Type": "Text",
+            "Content": "*CommercialInfluence",
+            "Font": "^Font",
+            "FontSize": "30",
+            "FontStyle": "^Bold",
+            "X": "670",
+            "Y": "1290", 
+            "Width": "^ReqWidth",
+            "Height": "^ReqInfluenceHeight"
+        },
+        {
+            "Type": "Text",
+            "Content": "*CommercialReq",
+            "Font": "^Font",
+            "FontSize": "30",
+            "FontStyle": "^Bold",
+            "X": "670",
+            "Y": "1350", 
+            "Width": "^ReqWidth",
+            "Height": "^ReqTextHeight"
+        },
+
+        {
+            "Type": "Border",
+            "X": "890",
+            "Y": "1175",
+            "Width": "^ReqWidth",
+            "Height": "^ReqBorderHeight",
+            "Thickness": "^ReqBorderThickness",
+            "Alignment": "Outer",
+            "Enabled": "*CommercialAgentPresent"
+        },
+        {
+            "Type": "Rectangle",
+            "X": "890",
+            "Y": "1234",
+            "Width": "^ReqWidth",
+            "Height": "^ReqBorderThickness",
+            "Enabled": "*CommercialAgentPresent"
+        },
+        {
+            "Type": "Text",
+            "Content": "*CommercialAgentInfluence",
+            "Font": "^Font",
+            "FontSize": "30",
+            "FontStyle": "^Bold",
+            "X": "890",
+            "Y": "1190", 
+            "Width": "^ReqWidth",
+            "Height": "^ReqInfluenceHeight",
+            "Enabled": "*CommercialAgentPresent"
+        },
+        {
+            "Type": "Text",
+            "Content": "Agent {^Agent} Present",
+            "Font": "^Font",
+            "FontSize": "30",
+            "FontStyle": "^Bold",
+            "X": "890",
+            "Y": "1250", 
+            "Width": "^ReqWidth",
+            "Height": "^ReqTextHeight",
+            "Enabled": "*CommercialAgentPresent"
+        },
+
+
+        {
+            "Type": "Border",
+            "X": "210",
+            "Y": "1175",
+            "Width": "^ReqWidth",
+            "Height": "^ReqBorderHeight",
+            "Thickness": "^ReqBorderThickness",
+            "Alignment": "Outer"
+        },
+        {
+            "Type": "Rectangle",
+            "X": "210",
+            "Y": "1234",
+            "Width": "^ReqWidth",
+            "Height": "^ReqBorderThickness"
+        },
+        {
+            "Type": "Text",
+            "Content": "*MediaInfluence",
+            "Font": "^Font",
+            "FontSize": "30",
+            "FontStyle": "^Bold",
+            "X": "210",
+            "Y": "1190", 
+            "Width": "^ReqWidth",
+            "Height": "^ReqInfluenceHeight"
+        },
+        {
+            "Type": "Text",
+            "Content": "*MediaReq",
+            "Font": "^Font",
+            "FontSize": "30",
+            "FontStyle": "^Bold",
+            "X": "210",
+            "Y": "1250", 
+            "Width": "^ReqWidth",
+            "Height": "^ReqTextHeight"
+        },
+
+        {
+            "Type": "Border",
+            "X": "435",
+            "Y": "1275",
+            "Width": "^ReqWidth",
+            "Height": "^ReqBorderHeight",
+            "Thickness": "^ReqBorderThickness",
+            "Alignment": "Outer",
+            "Enabled": "*MediaAgentPresent"
+        },
+        {
+            "Type": "Rectangle",
+            "X": "435",
+            "Y": "1334",
+            "Width": "^ReqWidth",
+            "Height": "^ReqBorderThickness",
+            "Enabled": "*MediaAgentPresent"
+        },
+        {
+            "Type": "Text",
+            "Content": "*MediaAgentInfluence",
+            "Font": "^Font",
+            "FontSize": "30",
+            "FontStyle": "^Bold",
+            "X": "435",
+            "Y": "1290", 
+            "Width": "^ReqWidth",
+            "Height": "^ReqInfluenceHeight",
+            "Enabled": "*MediaAgentPresent"
+        },
+        {
+            "Type": "Text",
+            "Content": "Agent {^Agent} Present",
+            "Font": "^Font",
+            "FontSize": "30",
+            "FontStyle": "^Bold",
+            "X": "435",
+            "Y": "1350", 
+            "Width": "^ReqWidth",
+            "Height": "^ReqTextHeight",
+            "Enabled": "*MediaAgentPresent"
+        },
+
+
+        {
+            "Type": "Border",
+            "X": "120",
+            "Y": "735",
+            "Width": "^ReqWidth",
+            "Height": "^ReqBorderHeight",
+            "Thickness": "^ReqBorderThickness",
+            "Alignment": "Outer"
+        },
+        {
+            "Type": "Rectangle",
+            "X": "120",
+            "Y": "794",
+            "Width": "^ReqWidth",
+            "Height": "^ReqBorderThickness"
+        },
+        {
+            "Type": "Text",
+            "Content": "*SurveillanceInfluence",
+            "Font": "^Font",
+            "FontSize": "30",
+            "FontStyle": "^Bold",
+            "X": "120",
+            "Y": "750", 
+            "Width": "^ReqWidth",
+            "Height": "^ReqInfluenceHeight"
+        },
+        {
+            "Type": "Text",
+            "Content": "*SurveillanceReq",
+            "Font": "^Font",
+            "FontSize": "30",
+            "FontStyle": "^Bold",
+            "X": "120",
+            "Y": "810", 
+            "Width": "^ReqWidth",
+            "Height": "^ReqTextHeight"
+        },
+
+        {
+            "Type": "Border",
+            "X": "120",
+            "Y": "915",
+            "Width": "^ReqWidth",
+            "Height": "^ReqBorderHeight",
+            "Thickness": "^ReqBorderThickness",
+            "Alignment": "Outer",
+            "Enabled": "*SurveillanceAgentPresent"
+        },
+        {
+            "Type": "Rectangle",
+            "X": "120",
+            "Y": "974",
+            "Width": "^ReqWidth",
+            "Height": "^ReqBorderThickness",
+            "Enabled": "*SurveillanceAgentPresent"
+        },
+        {
+            "Type": "Text",
+            "Content": "*SurveillanceAgentInfluence",
+            "Font": "^Font",
+            "FontSize": "30",
+            "FontStyle": "^Bold",
+            "X": "120",
+            "Y": "930", 
+            "Width": "^ReqWidth",
+            "Height": "^ReqInfluenceHeight",
+            "Enabled": "*SurveillanceAgentPresent"
+        },
+        {
+            "Type": "Text",
+            "Content": "Agent {^Agent} Present",
+            "Font": "^Font",
+            "FontSize": "30",
+            "FontStyle": "^Bold",
+            "X": "120",
+            "Y": "990", 
+            "Width": "^ReqWidth",
+            "Height": "^ReqTextHeight",
+            "Enabled": "*SurveillanceAgentPresent"
+        },
+
+
+        {
+            "Type": "Border",
+            "X": "215",
+            "Y": "485",
+            "Width": "^ReqWidth",
+            "Height": "^ReqBorderHeight",
+            "Thickness": "^ReqBorderThickness",
+            "Alignment": "Outer"
+        },
+        {
+            "Type": "Rectangle",
+            "X": "215",
+            "Y": "544",
+            "Width": "^ReqWidth",
+            "Height": "^ReqBorderThickness"
+        },
+        {
+            "Type": "Text",
+            "Content": "*IntelligenceInfluence",
+            "Font": "^Font",
+            "FontSize": "30",
+            "FontStyle": "^Bold",
+            "X": "215",
+            "Y": "500", 
+            "Width": "^ReqWidth",
+            "Height": "^ReqInfluenceHeight"
+        },
+        {
+            "Type": "Text",
+            "Content": "*IntelligenceReq",
+            "Font": "^Font",
+            "FontSize": "30",
+            "FontStyle": "^Bold",
+            "X": "215",
+            "Y": "560", 
+            "Width": "^ReqWidth",
+            "Height": "^ReqTextHeight"
+        },
+
+        {
+            "Type": "Border",
+            "X": "435",
+            "Y": "385",
+            "Width": "^ReqWidth",
+            "Height": "^ReqBorderHeight",
+            "Thickness": "^ReqBorderThickness",
+            "Alignment": "Outer",
+            "Enabled": "*IntelligenceAgentPresent"
+        },
+        {
+            "Type": "Rectangle",
+            "X": "435",
+            "Y": "444",
+            "Width": "^ReqWidth",
+            "Height": "^ReqBorderThickness",
+            "Enabled": "*IntelligenceAgentPresent"
+        },
+        {
+            "Type": "Text",
+            "Content": "*IntelligenceAgentInfluence",
+            "Font": "^Font",
+            "FontSize": "30",
+            "FontStyle": "^Bold",
+            "X": "435",
+            "Y": "400", 
+            "Width": "^ReqWidth",
+            "Height": "^ReqInfluenceHeight",
+            "Enabled": "*IntelligenceAgentPresent"
+        },
+        {
+            "Type": "Text",
+            "Content": "Agent {^Agent} Present",
+            "Font": "^Font",
+            "FontSize": "30",
+            "FontStyle": "^Bold",
+            "X": "435",
+            "Y": "460", 
+            "Width": "^ReqWidth",
+            "Height": "^ReqTextHeight",
+            "Enabled": "*IntelligenceAgentPresent"
+        },
+
+
+        {
+            "Type": "Border",
+            "X": "550",
+            "Y": "825",
+            "Width": "^ReqWidth",
+            "Height": "^ReqBorderHeight",
+            "Thickness": "^ReqBorderThickness",
+            "Alignment": "Outer"
+        },
+        {
+            "Type": "Rectangle",
+            "X": "550",
+            "Y": "884",
+            "Width": "^ReqWidth",
+            "Height": "^ReqBorderThickness"
+        },
+        {
+            "Type": "Text",
+            "Content": "4 {^Influence}",
+            "Font": "^Font",
+            "FontSize": "30",
+            "FontStyle": "^Bold",
+            "X": "550",
+            "Y": "840", 
+            "Width": "^ReqWidth",
+            "Height": "^ReqInfluenceHeight"
+        },
+        {
+            "Type": "Text",
+            "Content": "*EmperorRoom",
+            "Font": "^Font",
+            "FontSize": "30",
+            "FontStyle": "^Bold",
+            "X": "550",
+            "Y": "900", 
+            "Width": "^ReqWidth",
+            "Height": "^ReqTextHeight"
+        },
+
+
+        {
+            "Type": "Border",
+            "X": "1800",
+            "Y": "500",
+            "Width": "^ReqWidth",
+            "Height": "^ReqBorderHeight",
+            "Thickness": "^ReqBorderThickness",
+            "Alignment": "Outer"
+        },
+        {
+            "Type": "Rectangle",
+            "X": "1800",
+            "Y": "559",
+            "Width": "^ReqWidth",
+            "Height": "^ReqBorderThickness"
+        },
+        {
+            "Type": "Text",
+            "Content": "*StrengthInfluence",
+            "Font": "^Font",
+            "FontSize": "30",
+            "FontStyle": "^Bold",
+            "X": "1800",
+            "Y": "515", 
+            "Width": "^ReqWidth",
+            "Height": "^ReqInfluenceHeight"
+        },
+        {
+            "Type": "Text",
+            "Content": "*StrengthReq",
+            "Font": "^Font",
+            "FontSize": "45",
+            "FontStyle": "^Bold",
+            "X": "1800",
+            "Y": "585", 
+            "Width": "^ReqWidth",
+            "Height": "^ReqTextHeight"
+        },
+
+        {
+            "Type": "Border",
+            "X": "1800",
+            "Y": "900",
+            "Width": "^ReqWidth",
+            "Height": "^ReqBorderHeight",
+            "Thickness": "^ReqBorderThickness",
+            "Alignment": "Outer"
+        },
+        {
+            "Type": "Rectangle",
+            "X": "1800",
+            "Y": "959",
+            "Width": "^ReqWidth",
+            "Height": "^ReqBorderThickness"
+        },
+        {
+            "Type": "Text",
+            "Content": "*WealthInfluence",
+            "Font": "^Font",
+            "FontSize": "30",
+            "FontStyle": "^Bold",
+            "X": "1800",
+            "Y": "915", 
+            "Width": "^ReqWidth",
+            "Height": "^ReqInfluenceHeight"
+        },
+        {
+            "Type": "Text",
+            "Content": "*WealthReq",
+            "Font": "^Font",
+            "FontSize": "45",
+            "FontStyle": "^Bold",
+            "X": "1800",
+            "Y": "985", 
+            "Width": "^ReqWidth",
+            "Height": "^ReqTextHeight"
+        },
+
+        {
+            "Type": "Border",
+            "X": "1800",
+            "Y": "1300",
+            "Width": "^ReqWidth",
+            "Height": "^ReqBorderHeight",
+            "Thickness": "^ReqBorderThickness",
+            "Alignment": "Outer"
+        },
+        {
+            "Type": "Rectangle",
+            "X": "1800",
+            "Y": "1359",
+            "Width": "^ReqWidth",
+            "Height": "^ReqBorderThickness"
+        },
+        {
+            "Type": "Text",
+            "Content": "*ControlInfluence",
+            "Font": "^Font",
+            "FontSize": "30",
+            "FontStyle": "^Bold",
+            "X": "1800",
+            "Y": "1315", 
+            "Width": "^ReqWidth",
+            "Height": "^ReqInfluenceHeight"
+        },
+        {
+            "Type": "Text",
+            "Content": "*ControlReq",
+            "Font": "^Font",
+            "FontSize": "45",
+            "FontStyle": "^Bold",
+            "X": "1800",
+            "Y": "1385", 
+            "Width": "^ReqWidth",
+            "Height": "^ReqTextHeight"
+        },
+    ]
+}
