@@ -1,5 +1,6 @@
 C:\Users\Noah\Pictures\Useful\LongLiveTheEmpire
 Prints
+Cards
 1 CitadelRooms\BlackmailVault.png
 1 CitadelRooms\BusinessAcquisitionPlanner.png
 1 CitadelRooms\CorruptBribesEvaluationRoom.png
@@ -108,3 +109,6 @@ Prints
 1 Plots\Yellow5.png
 1 Plots\Yellow6.png
 36 CardBacks\Plot.png
+1 Moves\EmperorAction.png
+1 Moves\FirstPlayer.png
+2 CardBacks\SpecialManeuver.png

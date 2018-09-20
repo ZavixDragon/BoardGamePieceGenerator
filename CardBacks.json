@@ -18,5 +18,9 @@
     {
         "FileName": "Maneuver.png",
         "Back": "Maneuver"
+    },
+    {
+        "FileName": "SpecialManeuver.png",
+        "Back": "Special Maneuver"
     }
 ]

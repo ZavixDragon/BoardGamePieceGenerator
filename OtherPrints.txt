@@ -1,5 +1,6 @@
 C:\Users\Noah\Pictures\Useful\LongLiveTheEmpire
-LargePrints
+Prints
+Boards
 1 PlayerBoards\CrimeLordDukat.png
 1 PlayerBoards\DisownedPrinceDrogo.png
 1 PlayerBoards\GrandMarshallGaven.png

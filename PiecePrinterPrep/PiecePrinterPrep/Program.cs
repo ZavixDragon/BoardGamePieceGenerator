@@ -15,8 +15,8 @@ namespace PiecePrinterPrep
             var lines = File.ReadAllLines(args[0]);
             var basePath = lines[0];
             var savePath = Path.Combine(lines[0], lines[1]);
-            var pages = new Pages(savePath);
-            lines.Skip(2).ToList().ForEach(item =>
+            var pages = new Pages(savePath, lines[2]);
+            lines.Skip(3).ToList().ForEach(item =>
             {
                 var count = int.Parse(item.Split(' ').First());
                 var path = item.Substring(item.Split(' ').First().Length + 1);
@@ -31,18 +31,20 @@ namespace PiecePrinterPrep
     public class Pages
     {
         private readonly List<Page> _pages = new List<Page>();
-        private readonly string _savePath;
+        private readonly string _saveDir;
+        private readonly string _saveName;
 
-        public Pages(string savePath)
+        public Pages(string saveDir, string saveName)
         {
-            _savePath = savePath;
-            _pages.Add(new Page(_savePath, 2550, 3300, _pages.Count + 1));
+            _saveDir = saveDir;
+            _saveName = saveName;
+            _pages.Add(new Page(Path.Combine(_saveDir, $"{_saveName}{_pages.Count + 1}.png"), 2550, 3300));
         }
 
         public void Add(ImageDetail detail)
         {
             if (!_pages.Last().CanAdd(detail))
-                _pages.Add(new Page(_savePath, 2550, 3300, _pages.Count + 1));
+                _pages.Add(new Page(Path.Combine(_saveDir, $"{_saveName}{_pages.Count + 1}.png"), 2550, 3300));
             _pages.Last().Add(detail);
         }
 
@@ -56,21 +58,19 @@ namespace PiecePrinterPrep
         private readonly string _savePath;
         private readonly int _maxWidth;
         private readonly int _maxHeight;
-        private readonly int _pageNum;
         private int _height => _lines.Sum(x => x.Height);
 
-        public Page(string savePath, int maxWidth, int maxHeight, int pageNum)
+        public Page(string savePath, int maxWidth, int maxHeight)
         {
             _savePath = savePath;
             _maxWidth = maxWidth;
             _maxHeight = maxHeight;
-            _pageNum = pageNum;
             _lines.Add(new PageLine(_maxWidth));
         }
 
         public bool CanAdd(ImageDetail detail)
         {
-            if (_height + detail.Height < _maxHeight)
+            if (_height + detail.Height <= _maxHeight)
                 return true;
             if (detail.Height - _lines.Last().Height + _height > _maxHeight)
                 return false;
@@ -104,7 +104,7 @@ namespace PiecePrinterPrep
                     offset += x.Height;
                 });
                 graphics.Flush();
-                bitmap.Save(Path.Combine(_savePath, $"Page{_pageNum}.png"), ImageFormat.Png);
+                bitmap.Save(_savePath, ImageFormat.Png);
             }
         }
 
