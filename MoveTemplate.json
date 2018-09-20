@@ -17,6 +17,15 @@
     "Items": 
     [
         {
+            "Type": "Border",
+            "X": "0",
+            "Y": "0",
+            "Width": "674",
+            "Height": "1050",
+            "Thickness": "6",
+            "Alignment": "Inner"
+        },
+        {
             "Type": "Text",
             "Content": "*Special",
             "Font": "^Font",

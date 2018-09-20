@@ -1,0 +1,8 @@
+C:\Users\Noah\Pictures\Useful\LongLiveTheEmpire
+TokenPrints
+1 BaseControl.png
+1 BaseStrength.png
+1 BaseWealth.png
+1 Strength.png
+1 Control.png
+1 Wealth.png

@@ -29,7 +29,7 @@
             "Type": "Text",
             "Content": "*Back",
             "Font": "^Font",
-            "FontSize": "100",
+            "FontSize": "90",
             "FontStyle": "^Bold",
             "X": "37",
             "Y": "30", 

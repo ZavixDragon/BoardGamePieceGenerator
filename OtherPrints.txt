@@ -1,0 +1,9 @@
+C:\Users\Noah\Pictures\Useful\LongLiveTheEmpire
+LargePrints
+1 PlayerBoards\CrimeLordDukat.png
+1 PlayerBoards\DisownedPrinceDrogo.png
+1 PlayerBoards\GrandMarshallGaven.png
+1 PlayerBoards\MadScientistVorix.png
+1 PlayerBoards\RebellionLeaderZero.png
+1 PlayerBoards\SpyMasterCrow.png
+6 PlayerBoard.png
