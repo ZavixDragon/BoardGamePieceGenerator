@@ -13,17 +13,19 @@ namespace Generator
 {
     class Program
     {
+        private static string _templateDir;
         static Dictionary<string, Action<JObject, CustomJInterpreter, Graphics>> _applyType = new Dictionary<string, Action<JObject, CustomJInterpreter, Graphics>>
         {
             { "Border", (obj, interpreter, graphics) => new BorderDetail(obj, interpreter).Apply(graphics) },
             { "Text", (obj, interpreter, graphics) => new TextDetail(obj, interpreter).Apply(graphics) },
-            { "Image", (obj, interpreter, graphics) => new ImageDetail(obj, interpreter).Apply(graphics) },
+            { "Image", (obj, interpreter, graphics) => new ImageDetail(_templateDir, obj, interpreter).Apply(graphics) },
             { "Rectangle", (obj, interpreter, graphics) => new RectangleDetail(obj, interpreter).Apply(graphics) },
         };
 
         static void Main(string[] args)
         {
             var templatePath = args[0];
+            _templateDir = Path.GetDirectoryName(templatePath);
             var listPath = args[1];
             var templateJson = File.ReadAllText(templatePath);
             var listJson = File.ReadAllText(listPath);
