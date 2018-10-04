@@ -27,7 +27,7 @@ namespace Generator
 
         public void Apply(Graphics graphics)
         {
-            var img = Image.FromFile(Path.Combine(_templateDir, Source)).WithOpacity(Opacity);
+            var img = Image.FromFile(Path.GetFullPath(Path.Combine(_templateDir, Source))).WithOpacity(Opacity);
             graphics.DrawImage(img, new Rectangle(X, Y, Width, Height), new Rectangle(0, 0, img.Width, img.Height), GraphicsUnit.Pixel);
         }
     }

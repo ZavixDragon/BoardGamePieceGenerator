@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using Newtonsoft.Json.Linq;
 
@@ -8,6 +9,7 @@ namespace Generator
 {
     public class TextDetail
     {
+        private readonly string _templateDir;
         private readonly CustomJInterpreter _interpreter;
 
         public string Content;
@@ -22,8 +24,9 @@ namespace Generator
         public VerticalAlignment VerticalTextAlignment;
         public HorizontalAlignment HorizontalTextAlignment;
 
-        public TextDetail(JObject text, CustomJInterpreter interpreter)
+        public TextDetail(string templateDir, JObject text, CustomJInterpreter interpreter)
         {
+            _templateDir = templateDir;
             _interpreter = interpreter;
             Content = interpreter.GetString(text, "Content");
             Font = interpreter.GetString(text, "Font");
@@ -49,7 +52,7 @@ namespace Generator
                 if (x == "\n")
                     textLines.NewLine();
                 else if (x.StartsWith("{"))
-                    textLines.Add(new Symbol(x, graphics, _interpreter, font, fontFamily, FontStyle));
+                    textLines.Add(new Symbol(x, _templateDir, graphics, _interpreter, font, fontFamily, FontStyle));
                 else 
                     textLines.Add(new Word(x, font, graphics, Color, spaceWidth));
             });
@@ -176,9 +179,9 @@ namespace Generator
         private readonly Graphics _graphics;
         public int Width { get; }
 
-        public Symbol(string symbol, Graphics graphics, CustomJInterpreter interpreter, Font font, FontFamily fontFamily, FontStyle fontStyle)
+        public Symbol(string symbol, string templateDir, Graphics graphics, CustomJInterpreter interpreter, Font font, FontFamily fontFamily, FontStyle fontStyle)
         {
-            _image = interpreter.GetRootValue(symbol.Substring(1, symbol.Length - 2));
+            _image = Path.GetFullPath(Path.Combine(templateDir, interpreter.GetRootValue(symbol.Substring(1, symbol.Length - 2))));
             _graphics = graphics;
             var lineSpacing = font.Size * fontFamily.GetLineSpacing(fontStyle) / fontFamily.GetEmHeight(fontStyle);
             Width = (int)Math.Ceiling(lineSpacing);

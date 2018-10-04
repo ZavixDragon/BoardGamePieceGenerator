@@ -17,7 +17,7 @@ namespace Generator
         static Dictionary<string, Action<JObject, CustomJInterpreter, Graphics>> _applyType = new Dictionary<string, Action<JObject, CustomJInterpreter, Graphics>>
         {
             { "Border", (obj, interpreter, graphics) => new BorderDetail(obj, interpreter).Apply(graphics) },
-            { "Text", (obj, interpreter, graphics) => new TextDetail(obj, interpreter).Apply(graphics) },
+            { "Text", (obj, interpreter, graphics) => new TextDetail(_templateDir, obj, interpreter).Apply(graphics) },
             { "Image", (obj, interpreter, graphics) => new ImageDetail(_templateDir, obj, interpreter).Apply(graphics) },
             { "Rectangle", (obj, interpreter, graphics) => new RectangleDetail(obj, interpreter).Apply(graphics) },
         };
@@ -48,7 +48,7 @@ namespace Generator
                         graphics.FillRectangle(brush, 0, 0, canvas.Width, canvas.Height);
                     items.ForEach(x => _applyType[x.GetPropertyValue("Type")](x, interpreter, graphics));
                     graphics.Flush();
-                    bitmap.Save(Path.Combine(template.GetPropertyValue("Path"), item.GetPropertyValue("FileName")), ImageFormat.Png);
+                    bitmap.Save(Path.GetFullPath(Path.Combine(_templateDir, template.GetPropertyValue("Path"), item.GetPropertyValue("FileName"))), ImageFormat.Png);
                 }
             }
         }
