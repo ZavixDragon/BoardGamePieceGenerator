@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
+using System.Drawing.Printing;
 using System.Drawing.Text;
 using System.IO;
 using System.Linq;
@@ -38,13 +39,13 @@ namespace PiecePrinterPrep
         {
             _saveDir = saveDir;
             _saveName = saveName;
-            _pages.Add(new Page(Path.Combine(_saveDir, $"{_saveName}{_pages.Count + 1}.png"), 2400, 3150));
+            _pages.Add(new Page(Path.GetFullPath(Path.Combine(_saveDir, $"{_saveName}{_pages.Count + 1}.png")), 2100, 3150));
         }
 
         public void Add(ImageDetail detail)
         {
             if (!_pages.Last().CanAdd(detail))
-                _pages.Add(new Page(Path.Combine(_saveDir, $"{_saveName}{_pages.Count + 1}.png"), 2400, 3150));
+                _pages.Add(new Page(Path.GetFullPath(Path.Combine(_saveDir, $"{_saveName}{_pages.Count + 1}.png")), 2100, 3150));
             _pages.Last().Add(detail);
         }
 
@@ -105,10 +106,25 @@ namespace PiecePrinterPrep
                 });
                 graphics.Flush();
                 bitmap.Save(_savePath, ImageFormat.Png);
+                
+                _bitmap = bitmap;
+                var print = new PrintDocument();
+                print.PrintPage += PrintPage;
+                print.Print();
+                print.Dispose();
             }
         }
-
+        
         public void Dispose() => _lines.ForEach(x => x.Dispose());
+
+        private Bitmap _bitmap;
+        
+        private void PrintPage(object o, PrintPageEventArgs e)
+        {
+            var width = (float)_maxWidth / 300 * 100;
+            var height = (float)_maxHeight / 300 * 100;
+            e.Graphics.DrawImage(_bitmap, 0, 0, width, height);
+        }
     }
 
     public class PageLine
