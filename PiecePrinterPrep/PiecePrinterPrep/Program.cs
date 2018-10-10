@@ -106,25 +106,10 @@ namespace PiecePrinterPrep
                 });
                 graphics.Flush();
                 bitmap.Save(_savePath, ImageFormat.Png);
-                
-                _bitmap = bitmap;
-                var print = new PrintDocument();
-                print.PrintPage += PrintPage;
-                print.Print();
-                print.Dispose();
             }
         }
         
         public void Dispose() => _lines.ForEach(x => x.Dispose());
-
-        private Bitmap _bitmap;
-        
-        private void PrintPage(object o, PrintPageEventArgs e)
-        {
-            var width = (float)_maxWidth / 300 * 100;
-            var height = (float)_maxHeight / 300 * 100;
-            e.Graphics.DrawImage(_bitmap, 0, 0, width, height);
-        }
     }
 
     public class PageLine
