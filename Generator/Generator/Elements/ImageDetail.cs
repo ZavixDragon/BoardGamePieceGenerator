@@ -14,15 +14,15 @@ namespace Generator
         public int Width;
         public int Height;
 
-        public ImageDetail(string templateDir, JObject image, CustomJInterpreter interpreter)
+        public ImageDetail(string templateDir, JObject image, CustomJPrototypeResolver resolver)
         {
             _templateDir = templateDir;
-            Source = interpreter.GetString(image, "Source");
-            Opacity = interpreter.GetDecimalOrDefault(image, "Opacity", 1);
-            X = interpreter.GetInt(image, "X");
-            Y = interpreter.GetInt(image, "Y");
-            Width = interpreter.GetInt(image, "Width");
-            Height = interpreter.GetInt(image, "Height");
+            Source = resolver.GetString(image, "Source");
+            Opacity = resolver.GetDecimalOrDefault(image, "Opacity", 1);
+            X = resolver.GetInt(image, "X");
+            Y = resolver.GetInt(image, "Y");
+            Width = resolver.GetInt(image, "Width");
+            Height = resolver.GetInt(image, "Height");
         }
 
         public void Apply(Graphics graphics)

@@ -13,15 +13,15 @@ namespace Generator
         public int Thickness;
         public BorderAlignment Alignment;
 
-        public BorderDetail(JObject border, CustomJInterpreter interpreter)
+        public BorderDetail(JObject border, CustomJPrototypeResolver resolver)
         {
-            Color = interpreter.GetColorOrDefault(border, "Color", Color.Black);
-            X = interpreter.GetInt(border, "X");
-            Y = interpreter.GetInt(border, "Y");
-            Width = interpreter.GetInt(border, "Width");
-            Height = interpreter.GetInt(border, "Height");
-            Thickness = interpreter.GetInt(border, "Thickness");
-            Alignment = interpreter.GetEnum<BorderAlignment>(border, "Alignment");
+            Color = resolver.GetColorOrDefault(border, "Color", Color.Black);
+            X = resolver.GetInt(border, "X");
+            Y = resolver.GetInt(border, "Y");
+            Width = resolver.GetInt(border, "Width");
+            Height = resolver.GetInt(border, "Height");
+            Thickness = resolver.GetInt(border, "Thickness");
+            Alignment = resolver.GetEnum<BorderAlignment>(border, "Alignment");
         }
 
         public void Apply(Graphics graphics)

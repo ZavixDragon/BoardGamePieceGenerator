@@ -9,11 +9,11 @@ namespace Generator
         public int Width;
         public Color Background;
 
-        public Canvas(JObject canvas, CustomJInterpreter interpreter)
+        public Canvas(JObject canvas, CustomJPrototypeResolver resolver)
         {
-            Height = interpreter.GetInt(canvas, "Height");
-            Width = interpreter.GetInt(canvas, "Width");
-            Background = interpreter.GetColorOrDefault(canvas, "Background", Color.White);
+            Height = resolver.GetInt(canvas, "Height");
+            Width = resolver.GetInt(canvas, "Width");
+            Background = resolver.GetColorOrDefault(canvas, "Background", Color.White);
         }
     }
 }

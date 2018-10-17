@@ -11,13 +11,13 @@ namespace Generator
         public int Width;
         public int Height;
 
-        public RectangleDetail(JObject border, CustomJInterpreter interpreter)
+        public RectangleDetail(JObject border, CustomJPrototypeResolver resolver)
         {
-            Color = interpreter.GetColorOrDefault(border, "Color", Color.Black);
-            X = interpreter.GetInt(border, "X");
-            Y = interpreter.GetInt(border, "Y");
-            Width = interpreter.GetInt(border, "Width");
-            Height = interpreter.GetInt(border, "Height");
+            Color = resolver.GetColorOrDefault(border, "Color", Color.Black);
+            X = resolver.GetInt(border, "X");
+            Y = resolver.GetInt(border, "Y");
+            Width = resolver.GetInt(border, "Width");
+            Height = resolver.GetInt(border, "Height");
         }
 
         public void Apply(Graphics graphics)

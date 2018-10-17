@@ -10,7 +10,7 @@ namespace Generator
     public class TextDetail
     {
         private readonly string _templateDir;
-        private readonly CustomJInterpreter _interpreter;
+        private readonly CustomJPrototypeResolver _resolver;
 
         public string Content;
         public string Font;
@@ -24,21 +24,21 @@ namespace Generator
         public VerticalAlignment VerticalTextAlignment;
         public HorizontalAlignment HorizontalTextAlignment;
 
-        public TextDetail(string templateDir, JObject text, CustomJInterpreter interpreter)
+        public TextDetail(string templateDir, JObject text, CustomJPrototypeResolver resolver)
         {
             _templateDir = templateDir;
-            _interpreter = interpreter;
-            Content = interpreter.GetString(text, "Content");
-            Font = interpreter.GetString(text, "Font");
-            FontSize = interpreter.GetInt(text, "FontSize");
-            FontStyle = interpreter.GetFlagsEnumOrDefault(text, "FontStyle", FontStyle.Regular);
-            Color = interpreter.GetColorOrDefault(text, "Color", Color.Black);
-            X = interpreter.GetInt(text, "X");
-            Y = interpreter.GetInt(text, "Y");
-            Width = interpreter.GetInt(text, "Width");
-            Height = interpreter.GetInt(text, "Height");
-            VerticalTextAlignment = interpreter.GetEnumOrDefault(text, "VerticalTextAlign", VerticalAlignment.Center);
-            HorizontalTextAlignment = interpreter.GetEnumOrDefault(text, "HorizontalTextAlign", HorizontalAlignment.Center);
+            _resolver = resolver;
+            Content = resolver.GetString(text, "Content");
+            Font = resolver.GetString(text, "Font");
+            FontSize = resolver.GetInt(text, "FontSize");
+            FontStyle = resolver.GetFlagsEnumOrDefault(text, "FontStyle", FontStyle.Regular);
+            Color = resolver.GetColorOrDefault(text, "Color", Color.Black);
+            X = resolver.GetInt(text, "X");
+            Y = resolver.GetInt(text, "Y");
+            Width = resolver.GetInt(text, "Width");
+            Height = resolver.GetInt(text, "Height");
+            VerticalTextAlignment = resolver.GetEnumOrDefault(text, "VerticalTextAlign", VerticalAlignment.Center);
+            HorizontalTextAlignment = resolver.GetEnumOrDefault(text, "HorizontalTextAlign", HorizontalAlignment.Center);
         }
 
         public void Apply(Graphics graphics)
@@ -51,8 +51,8 @@ namespace Generator
             {
                 if (x == "\n")
                     textLines.NewLine();
-                else if (x.StartsWith("{"))
-                    textLines.Add(new Symbol(x, _templateDir, graphics, _interpreter, font, fontFamily, FontStyle));
+                else if (x.StartsWith("["))
+                    textLines.Add(new Symbol(x, _templateDir, graphics, _resolver, font, fontFamily, FontStyle));
                 else 
                     textLines.Add(new Word(x, font, graphics, Color, spaceWidth));
             });
@@ -179,9 +179,9 @@ namespace Generator
         private readonly Graphics _graphics;
         public int Width { get; }
 
-        public Symbol(string symbol, string templateDir, Graphics graphics, CustomJInterpreter interpreter, Font font, FontFamily fontFamily, FontStyle fontStyle)
+        public Symbol(string symbol, string templateDir, Graphics graphics, CustomJPrototypeResolver resolver, Font font, FontFamily fontFamily, FontStyle fontStyle)
         {
-            _image = Path.GetFullPath(Path.Combine(templateDir, interpreter.GetRootValue(symbol.Substring(1, symbol.Length - 2))));
+            _image = Path.GetFullPath(Path.Combine(templateDir, resolver.GetRootValue(symbol.Substring(1, symbol.Length - 2))));
             _graphics = graphics;
             var lineSpacing = font.Size * fontFamily.GetLineSpacing(fontStyle) / fontFamily.GetEmHeight(fontStyle);
             Width = (int)Math.Ceiling(lineSpacing);

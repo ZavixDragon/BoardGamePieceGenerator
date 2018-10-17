@@ -46,19 +46,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BorderAlignment.cs" />
-    <Compile Include="BorderDetail.cs" />
+    <Compile Include="CustomJPrototypeResolver.cs" />
+    <Compile Include="Enums\BorderAlignment.cs" />
+    <Compile Include="Elements\BorderDetail.cs" />
     <Compile Include="Canvas.cs" />
     <Compile Include="CustomJInterpreter.cs" />
-    <Compile Include="HorizontalAlignment.cs" />
-    <Compile Include="ImageDetail.cs" />
-    <Compile Include="ImageExtensions.cs" />
-    <Compile Include="JObjectExtensions.cs" />
+    <Compile Include="Extensions\IEnumerableExtensions.cs" />
+    <Compile Include="Extensions\JObjectX.cs" />
+    <Compile Include="Enums\HorizontalAlignment.cs" />
+    <Compile Include="Elements\ImageDetail.cs" />
+    <Compile Include="Extensions\ImageExtensions.cs" />
+    <Compile Include="Extensions\JObjectExtensions.cs" />
+    <Compile Include="Extensions\PathX.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RectangleDetail.cs" />
-    <Compile Include="TextDetail.cs" />
-    <Compile Include="VerticalAlignment.cs" />
+    <Compile Include="Elements\RectangleDetail.cs" />
+    <Compile Include="Elements\TextDetail.cs" />
+    <Compile Include="Enums\VerticalAlignment.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
