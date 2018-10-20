@@ -42,7 +42,7 @@ namespace Generator
                 {
                     using (var brush = new SolidBrush(canvas.Background))
                         graphics.FillRectangle(brush, 0, 0, canvas.Width, canvas.Height);
-                    elements.ForEach(x => applyType[x.GetPropertyValue("Type")](x, resolver, graphics));
+                    elements.ForEach(x => applyType[resolver.GetString(x, "Type")](x, resolver, graphics));
                     graphics.Flush();
                     bitmap.Save(PathX.Build(instructionsDir, savePath, $"{saveName}{i}.png"), ImageFormat.Png);
                 });
@@ -77,7 +77,7 @@ namespace Generator
             if (instructions.ContainsKey("ImportedPrototypes"))
                 foreach (var prototypesFileName in instructions["ImportedPrototypes"].Children<JToken>())
                 {
-                    var importedPrototypes = (JObject)JObjectX.FromFile(instructionsDir, prototypesFileName.GetValue())["Constants"];
+                    var importedPrototypes = (JObject)JObjectX.FromFile(instructionsDir, prototypesFileName.GetValue())["Prototypes"];
                     importedPrototypes.Merge(prototypes);
                     prototypes = importedPrototypes;
                 }
