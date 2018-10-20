@@ -95,7 +95,7 @@ namespace Generator
                 var segment = "";
                 var depth = 1;
                 var strRemainder = "";
-                for (var i = startOfSegment + 1; depth == 0; i++)
+                for (var i = startOfSegment + 1; depth != 0; i++)
                 {
                     if (str[i] == '{')
                         depth++;
@@ -113,7 +113,7 @@ namespace Generator
             if (str.StartsWith("^"))
                 return GetRootValue(_constants.GetPropertyValue(GetRootValue(str.Substring(1))));
             if (str.StartsWith("#"))
-                return ((decimal)_mathResolver.Compute(GetRootValue(str.Substring(1)), "")).ToString();
+                return _mathResolver.Compute(GetRootValue(str.Substring(1)), "").ToString();
             return str;
         }
     }
