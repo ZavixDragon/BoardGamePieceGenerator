@@ -58,6 +58,7 @@
     <Compile Include="Extensions\ImageExtensions.cs" />
     <Compile Include="Extensions\JObjectExtensions.cs" />
     <Compile Include="Extensions\PathX.cs" />
+    <Compile Include="Generator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Elements\RectangleDetail.cs" />
