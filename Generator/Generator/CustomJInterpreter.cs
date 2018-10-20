@@ -19,31 +19,46 @@ namespace Generator
         }
 
         public string GetStringOrDefault(JObject baseObj, string key, string defaultValue) 
-            => baseObj.ContainsKey(key) ? GetString(baseObj, key) : defaultValue;
+            => GetStringOrDefault(baseObj, key, () => defaultValue);
 
+        public string GetStringOrDefault(JObject baseObj, string key, Func<string> defaultValue) 
+            => baseObj.ContainsKey(key) ? GetString(baseObj, key) : defaultValue();
+        
         public string GetString(JObject baseObj, string key) 
             => GetRootValue(baseObj.GetPropertyValue(key));
 
-        public int GetIntOrDefault(JObject baseObj, string key, int defaultValue) 
-            => baseObj.ContainsKey(key) ? GetInt(baseObj, key) : defaultValue;
+        public int GetIntOrDefault(JObject baseObj, string key, int defaultValue)
+            => GetIntOrDefault(baseObj, key, () => defaultValue);
+        
+        public int GetIntOrDefault(JObject baseObj, string key, Func<int> defaultValue) 
+            => baseObj.ContainsKey(key) ? GetInt(baseObj, key) : defaultValue();
 
         public int GetInt(JObject baseObj, string key) 
             => int.Parse(GetRootValue(baseObj.GetPropertyValue(key)));
 
-        public decimal GetDecimalOrDefault(JObject baseObj, string key, decimal defaultValue) 
-            => baseObj.ContainsKey(key) ? GetDecimal(baseObj, key) : defaultValue;
+        public decimal GetDecimalOrDefault(JObject baseObj, string key, decimal defaultValue)
+            => GetDecimalOrDefault(baseObj, key, () => defaultValue);
+        
+        public decimal GetDecimalOrDefault(JObject baseObj, string key, Func<decimal> defaultValue) 
+            => baseObj.ContainsKey(key) ? GetDecimal(baseObj, key) : defaultValue();
 
         public decimal GetDecimal(JObject baseObj, string key) 
             => decimal.Parse(GetRootValue(baseObj.GetPropertyValue(key)));
 
-        public bool GetBoolOrDefault(JObject baseObj, string key, bool defaultValue) 
-            => baseObj.ContainsKey(key) ? GetBool(baseObj, key) : defaultValue;
+        public bool GetBoolOrDefault(JObject baseObj, string key, bool defaultValue)
+            => GetBoolOrDefault(baseObj, key, () => defaultValue);
+        
+        public bool GetBoolOrDefault(JObject baseObj, string key, Func<bool> defaultValue) 
+            => baseObj.ContainsKey(key) ? GetBool(baseObj, key) : defaultValue();
 
         public bool GetBool(JObject baseObj, string key)
             => bool.Parse(GetRootValue(baseObj.GetPropertyValue(key)));
 
         public Color GetColorOrDefault(JObject baseObj, string key, Color defaultValue)
-            => baseObj.ContainsKey(key) ? GetColor(baseObj, key) : defaultValue;
+            => GetColorOrDefault(baseObj, key, () => defaultValue);
+        
+        public Color GetColorOrDefault(JObject baseObj, string key, Func<Color> defaultValue)
+            => baseObj.ContainsKey(key) ? GetColor(baseObj, key) : defaultValue();
 
         public Color GetColor(JObject baseObj, string key)
         {
@@ -55,13 +70,19 @@ namespace Generator
         }
 
         public T GetEnumOrDefault<T>(JObject baseObj, string key, T defaultValue)
-            => baseObj.ContainsKey(key) ? GetEnum<T>(baseObj, key) : defaultValue;
+            => GetEnumOrDefault(baseObj, key, () => defaultValue);
+        
+        public T GetEnumOrDefault<T>(JObject baseObj, string key, Func<T> defaultValue)
+            => baseObj.ContainsKey(key) ? GetEnum<T>(baseObj, key) : defaultValue();
 
         public T GetEnum<T>(JObject baseObj, string key)
             => (T)Enum.Parse(typeof(T), GetRootValue(baseObj.GetPropertyValue(key)));
 
         public T GetFlagsEnumOrDefault<T>(JObject baseObj, string key, T defaultValue)
-            => baseObj.ContainsKey(key) ? GetFlagsEnum<T>(baseObj, key) : defaultValue;
+            => GetFlagsEnumOrDefault(baseObj, key, () => defaultValue);
+        
+        public T GetFlagsEnumOrDefault<T>(JObject baseObj, string key, Func<T> defaultValue)
+            => baseObj.ContainsKey(key) ? GetFlagsEnum<T>(baseObj, key) : defaultValue();
 
         public T GetFlagsEnum<T>(JObject baseObj, string key)
             => (T)(object)GetInt(baseObj, key);
