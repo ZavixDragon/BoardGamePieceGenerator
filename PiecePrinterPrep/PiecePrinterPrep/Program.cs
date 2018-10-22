@@ -17,11 +17,11 @@ namespace PiecePrinterPrep
             var basePath = lines[0];
             var savePath = Path.Combine(lines[0], lines[1]);
             var pages = new Pages(savePath, lines[2]);
-            lines.Skip(3).ToList().ForEach(item =>
+            lines.Skip(4).ToList().ForEach(item =>
             {
                 var count = int.Parse(item.Split(' ').First());
                 var path = item.Substring(item.Split(' ').First().Length + 1);
-                var detail = new ImageDetail(basePath, path);
+                var detail = new ImageDetail(basePath, path, int.Parse(lines[3]));
                 Enumerable.Range(0, count).ToList().ForEach(x => pages.Add(detail));
             });
             pages.Create();
@@ -39,13 +39,13 @@ namespace PiecePrinterPrep
         {
             _saveDir = saveDir;
             _saveName = saveName;
-            _pages.Add(new Page(Path.GetFullPath(Path.Combine(_saveDir, $"{_saveName}{_pages.Count + 1}.png")), 2100, 3150));
+            _pages.Add(new Page(Path.GetFullPath(Path.Combine(_saveDir, $"{_saveName}{_pages.Count + 1}.png")), 2250, 3150));
         }
 
         public void Add(ImageDetail detail)
         {
             if (!_pages.Last().CanAdd(detail))
-                _pages.Add(new Page(Path.GetFullPath(Path.Combine(_saveDir, $"{_saveName}{_pages.Count + 1}.png")), 2100, 3150));
+                _pages.Add(new Page(Path.GetFullPath(Path.Combine(_saveDir, $"{_saveName}{_pages.Count + 1}.png")), 2250, 3150));
             _pages.Last().Add(detail);
         }
 
@@ -145,15 +145,32 @@ namespace PiecePrinterPrep
         private readonly Image _image;
         public int Width { get; }
         public int Height { get; }
+        private readonly int _thickness;
 
-        public ImageDetail(string basePath, string imagePath)
+        public ImageDetail(string basePath, string imagePath, int thickness)
         {
             _image = Image.FromFile(Path.Combine(basePath, imagePath));
             Width = _image.Width;
             Height = _image.Height;
+            _thickness = thickness;
         }
 
-        public void Apply(Graphics graphics, int x, int y) => graphics.DrawImage(_image, new Rectangle(x, y, Width, Height));
+        public void Apply(Graphics graphics, int x, int y)
+        {
+            var width = Width + (_thickness * 2);
+            var height = Height + (_thickness * 2);
+            using (var bitmap = new Bitmap(width, height))
+            {
+                using (var imageGraphics = Graphics.FromImage(bitmap))
+                {
+                    using (var brush = new SolidBrush(Color.Black))
+                        imageGraphics.FillRectangle(brush, 0, 0, width, height);
+                    imageGraphics.DrawImage(_image, new Rectangle(_thickness, _thickness, Width, Height));
+                    graphics.DrawImage(bitmap, new Rectangle(x - _thickness, y - _thickness, Width + (_thickness * 2), Height + (_thickness * 2)));
+                }
+            }
+        }
+
         public void Dispose() => _image.Dispose();
     }
 }
