@@ -6,6 +6,7 @@ using System.Drawing.Imaging;
 using System.Drawing.Text;
 using System.IO;
 using System.Linq;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace Generator
@@ -14,6 +15,7 @@ namespace Generator
     {
         public void Run(string instructionsPath)
         {
+            Console.WriteLine("");
             var instructionsDir = Path.GetDirectoryName(instructionsPath);
             var instructions = JObjectX.FromFile(instructionsPath);
             var savePath = instructions.GetPropertyValue("SavePath");
@@ -28,23 +30,46 @@ namespace Generator
                 { "Text", (obj, interpreter, graphics) => new TextDetail(instructionsDir, obj, interpreter).Apply(graphics) },
                 { "Image", (obj, interpreter, graphics) => new ImageDetail(instructionsDir, obj, interpreter).Apply(graphics) },
                 { "Rectangle", (obj, interpreter, graphics) => new RectangleDetail(obj, interpreter).Apply(graphics) },
+                { "Circle", (obj, interpreter, graphics) => new CircleDetail(obj, interpreter).Apply(graphics) },
+                { "CircleBorder", (obj, interpreter, graphics) => new CircleBorderDetail(obj, interpreter).Apply(graphics) },
             };
 
             for (var i = 0; i < items.Count; i++)
             {
-                var resolver = new CustomJPrototypeResolver(prototypes, new CustomJInterpreter(items[i], constants));
-                var blueprint = (JObject) instructions["Blueprint"];
-                var canvas = new Canvas(blueprint, resolver);
-                var elements = ((JArray)blueprint["Elements"]).Children<JObject>().Where(x => resolver.GetBoolOrDefault(x, "Enabled", true)).ToList();
-                var bitmap = new Bitmap(canvas.Width, canvas.Height);
-                WithGraphics(bitmap, graphics =>
+                try
                 {
-                    using (var brush = new SolidBrush(canvas.Background))
-                        graphics.FillRectangle(brush, 0, 0, canvas.Width, canvas.Height);
-                    elements.ForEach(x => applyType[resolver.GetString(x, "Type")](x, resolver, graphics));
-                    graphics.Flush();
-                    bitmap.Save(PathX.Build(instructionsDir, savePath, $"{saveName}{i}.png"), ImageFormat.Png);
-                });
+                    var resolver =
+                        new CustomJPrototypeResolver(prototypes, new CustomJInterpreter(items[i], constants));
+                    var blueprint = (JObject) instructions["Blueprint"];
+                    var canvas = new Canvas(blueprint, resolver);
+                    var elements = ((JArray) blueprint["Elements"]).Children<JObject>()
+                        .Where(x => resolver.GetBoolOrDefault(x, "Enabled", true)).ToList();
+                    var bitmap = new Bitmap(canvas.Width, canvas.Height);
+                    WithGraphics(bitmap, graphics =>
+                    {
+                        using (var brush = new SolidBrush(canvas.Background))
+                            graphics.FillRectangle(brush, 0, 0, canvas.Width, canvas.Height);
+                        elements.ForEach(x =>
+                        {
+                            try
+                            {
+                                applyType[resolver.GetString(x, "Type")](x, resolver, graphics);
+                            }
+                            catch
+                            {
+                                Console.WriteLine($"Error Adding Element: {x.ToString(Formatting.None)}");
+                                throw;
+                            }
+                        });
+                        graphics.Flush();
+                        bitmap.Save(PathX.Build(instructionsDir, savePath, $"{saveName}{i}.png"), ImageFormat.Png);
+                    });
+                }
+                catch
+                {
+                    Console.WriteLine($"Error On Item {i}: {items[i].ToString(Formatting.None)}");
+                    throw;
+                }
             }
         }
 

@@ -109,9 +109,19 @@ namespace Generator
                 str = $"{str.Substring(0, startOfSegment)}{GetRootValue(segment)}{strRemainder}";
             }
             if (str.StartsWith("~"))
-                return GetRootValue(_itemContext.GetPropertyValue(GetRootValue(str.Substring(1))));
+            {
+                var refStr = _itemContext.GetPropertyValue(GetRootValue(str.Substring(1)));
+                if (refStr == null)
+                    Console.WriteLine($"Coundn't Resolve: {str}");
+                return GetRootValue(refStr);
+            }
             if (str.StartsWith("^"))
-                return GetRootValue(_constants.GetPropertyValue(GetRootValue(str.Substring(1))));
+            {
+                var refStr = _constants.GetPropertyValue(GetRootValue(str.Substring(1)));
+                if (refStr == null)
+                    Console.WriteLine($"Coundn't Resolve: {str}");
+                return GetRootValue(refStr);
+            }
             if (str.StartsWith("#"))
                 return _mathResolver.Compute(GetRootValue(str.Substring(1)), "").ToString();
             return str;

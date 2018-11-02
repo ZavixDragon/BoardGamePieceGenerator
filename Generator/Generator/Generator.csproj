@@ -47,6 +47,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CustomJPrototypeResolver.cs" />
+    <Compile Include="Elements\CircleBorderDetail.cs" />
+    <Compile Include="Elements\CircleDetail.cs" />
     <Compile Include="Enums\BorderAlignment.cs" />
     <Compile Include="Elements\BorderDetail.cs" />
     <Compile Include="Canvas.cs" />

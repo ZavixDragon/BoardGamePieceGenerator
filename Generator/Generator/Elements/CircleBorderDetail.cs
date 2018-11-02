@@ -3,7 +3,7 @@ using Newtonsoft.Json.Linq;
 
 namespace Generator
 {
-    public class BorderDetail
+    public class CircleBorderDetail
     {
         public Color Color;
         public int X;
@@ -13,7 +13,7 @@ namespace Generator
         public int Thickness;
         public BorderAlignment Alignment;
 
-        public BorderDetail(JObject border, CustomJPrototypeResolver resolver)
+        public CircleBorderDetail(JObject border, CustomJPrototypeResolver resolver)
         {
             Color = resolver.GetColorOrDefault(border, "Color", Color.Black);
             X = resolver.GetInt(border, "X");
@@ -26,14 +26,9 @@ namespace Generator
 
         public void Apply(Graphics graphics)
         {
+            var offset = (Thickness / 2) * (int)Alignment;
             using (var pen = new Pen(Color, Thickness))
-            {
-                var offset = (Thickness / 2) * (int)Alignment;
-                graphics.DrawLine(pen, X + offset, Y, X + offset, Y + Height);
-                graphics.DrawLine(pen, X, Y + Height - offset, X + Width, Y + Height - offset);
-                graphics.DrawLine(pen, X + Width - offset, Y + Height, X + Width - offset, Y);
-                graphics.DrawLine(pen, X + Width, Y + offset, X, Y + offset);
-            }
+                graphics.DrawEllipse(pen, X + offset, Y + offset, Width - 2 * offset, Height - 2 * offset);
         }
     }
 }

@@ -51,8 +51,10 @@ namespace Generator
             {
                 if (x == "\n")
                     textLines.NewLine();
+                else if (x.StartsWith("[["))
+                    textLines.Add(new Word(x.Substring(4, x.Length - 6), new Font(fontFamily, FontSize, (FontStyle)int.Parse(x.Substring(2, 2))), graphics, Color, spaceWidth));
                 else if (x.StartsWith("["))
-                    textLines.Add(new Symbol(x, _templateDir, graphics, _resolver, font, fontFamily, FontStyle));
+                    textLines.Add(new Symbol(x, _templateDir, graphics, _resolver, font, fontFamily, FontStyle, Color));
                 else 
                     textLines.Add(new Word(x, font, graphics, Color, spaceWidth));
             });
@@ -177,16 +179,18 @@ namespace Generator
     {
         private readonly string _image;
         private readonly Graphics _graphics;
+        private readonly decimal _opacity;
         public int Width { get; }
 
-        public Symbol(string symbol, string templateDir, Graphics graphics, CustomJPrototypeResolver resolver, Font font, FontFamily fontFamily, FontStyle fontStyle)
+        public Symbol(string symbol, string templateDir, Graphics graphics, CustomJPrototypeResolver resolver, Font font, FontFamily fontFamily, FontStyle fontStyle, Color opacity)
         {
             _image = Path.GetFullPath(Path.Combine(templateDir, resolver.GetRootValue(symbol.Substring(1, symbol.Length - 2))));
             _graphics = graphics;
+            _opacity = (decimal)opacity.A / 255;
             var lineSpacing = font.Size * fontFamily.GetLineSpacing(fontStyle) / fontFamily.GetEmHeight(fontStyle);
             Width = (int)Math.Ceiling(lineSpacing);
         }
 
-        public void Draw(int x, int y) => _graphics.DrawImage(Image.FromFile(_image), new Rectangle(x, y, Width, Width));
+        public void Draw(int x, int y) => _graphics.DrawImage(Image.FromFile(_image).WithOpacity(_opacity), new Rectangle(x, y, Width, Width));
     }
 }

@@ -12,6 +12,9 @@ namespace Generator
 
         public static Image WithOpacity(this Image img, decimal opacity)
         {
+            if (opacity == 1)
+                return img;
+
             var bitmap = (Bitmap)img.Clone();
             PixelFormat pxf = PixelFormat.Format32bppArgb;
             var rect = new Rectangle(0, 0, bitmap.Width, bitmap.Height);
