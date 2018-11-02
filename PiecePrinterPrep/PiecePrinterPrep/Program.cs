@@ -39,13 +39,13 @@ namespace PiecePrinterPrep
         {
             _saveDir = saveDir;
             _saveName = saveName;
-            _pages.Add(new Page(Path.GetFullPath(Path.Combine(_saveDir, $"{_saveName}{_pages.Count + 1}.png")), 2250, 3150));
+            _pages.Add(new Page(Path.GetFullPath(Path.Combine(_saveDir, $"{_saveName}{_pages.Count + 1}.png")), 2300, 3200));
         }
 
         public void Add(ImageDetail detail)
         {
             if (!_pages.Last().CanAdd(detail))
-                _pages.Add(new Page(Path.GetFullPath(Path.Combine(_saveDir, $"{_saveName}{_pages.Count + 1}.png")), 2250, 3150));
+                _pages.Add(new Page(Path.GetFullPath(Path.Combine(_saveDir, $"{_saveName}{_pages.Count + 1}.png")), 2300, 3200));
             _pages.Last().Add(detail);
         }
 
