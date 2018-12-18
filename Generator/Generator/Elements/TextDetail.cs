@@ -17,6 +17,8 @@ namespace Generator
         public int FontSize;
         public FontStyle FontStyle;
         public Color Color;
+        public Color OutlineColor;
+        public int OutlineThickness;
         public int X;
         public int Y;
         public int Width;
@@ -33,6 +35,8 @@ namespace Generator
             FontSize = resolver.GetInt(text, "FontSize");
             FontStyle = resolver.GetFlagsEnumOrDefault(text, "FontStyle", FontStyle.Regular);
             Color = resolver.GetColorOrDefault(text, "Color", Color.Black);
+            OutlineColor = resolver.GetColorOrDefault(text, "OutlineColor", Color.Transparent);
+            OutlineThickness = resolver.GetIntOrDefault(text, "OutlineThickness", 0);
             X = resolver.GetInt(text, "X");
             Y = resolver.GetInt(text, "Y");
             Width = resolver.GetInt(text, "Width");
@@ -52,11 +56,11 @@ namespace Generator
                 if (x == "\n")
                     textLines.NewLine();
                 else if (x.StartsWith("[["))
-                    textLines.Add(new Word(x.Substring(4, x.Length - 6), new Font(fontFamily, FontSize, (FontStyle)int.Parse(x.Substring(2, 2))), graphics, Color, spaceWidth));
+                    textLines.Add(new Word(x.Substring(4, x.Length - 6), new Font(fontFamily, FontSize, (FontStyle)int.Parse(x.Substring(2, 2))), graphics, Color, spaceWidth, OutlineColor, OutlineThickness));
                 else if (x.StartsWith("["))
                     textLines.Add(new Symbol(x, _templateDir, graphics, _resolver, font, fontFamily, FontStyle, Color));
                 else 
-                    textLines.Add(new Word(x, font, graphics, Color, spaceWidth));
+                    textLines.Add(new Word(x, font, graphics, Color, spaceWidth, OutlineColor, OutlineThickness));
             });
             if (VerticalTextAlignment == VerticalAlignment.Top)
                 textLines.Draw(X, Y);
@@ -148,21 +152,67 @@ namespace Generator
         private readonly Graphics _graphics;
         private readonly Color _color;
         private readonly int _spaceWidth;
+        private readonly Color _outlineColor;
+        private readonly int _outlineThickness;
         public int Width { get; }
 
-        public Word(string content, Font font, Graphics graphics, Color color, int spaceWidth)
+        public Word(string content, Font font, Graphics graphics, Color color, int spaceWidth, Color outlineColor, int outlineThickness)
         {
             _content = content;
             _font = font;
             _graphics = graphics;
             _color = color;
             _spaceWidth = spaceWidth;
+            _outlineColor = outlineColor;
+            _outlineThickness = outlineThickness;
             var measurement = graphics.MeasureString(_content, _font);
             Width = (int)measurement.Width - _spaceWidth;
         }
 
         public void Draw(int x, int y)
         {
+            if (_outlineColor.A != Color.Transparent.A && _outlineThickness > 0)
+            {
+                _graphics.DrawString(_content,
+                    _font,
+                    new SolidBrush(_outlineColor),
+                    new RectangleF(x - _spaceWidth / 2 - _outlineThickness, y, Width + 1 + _spaceWidth, _font.Height * 2),
+                    new StringFormat
+                    {
+                        Trimming = StringTrimming.None,
+                        LineAlignment = StringAlignment.Near
+                    });
+                
+                _graphics.DrawString(_content,
+                    _font,
+                    new SolidBrush(_outlineColor),
+                    new RectangleF(x - _spaceWidth / 2, y - _outlineThickness, Width + 1 + _spaceWidth, _font.Height * 2),
+                    new StringFormat
+                    {
+                        Trimming = StringTrimming.None,
+                        LineAlignment = StringAlignment.Near
+                    });
+                
+                _graphics.DrawString(_content,
+                    _font,
+                    new SolidBrush(_outlineColor),
+                    new RectangleF(x - _spaceWidth / 2 + _outlineThickness, y, Width + 1 + _spaceWidth, _font.Height * 2),
+                    new StringFormat
+                    {
+                        Trimming = StringTrimming.None,
+                        LineAlignment = StringAlignment.Near
+                    });
+                
+                _graphics.DrawString(_content,
+                    _font,
+                    new SolidBrush(_outlineColor),
+                    new RectangleF(x - _spaceWidth / 2, y + _outlineThickness, Width + 1 + _spaceWidth, _font.Height * 2),
+                    new StringFormat
+                    {
+                        Trimming = StringTrimming.None,
+                        LineAlignment = StringAlignment.Near
+                    });
+            }
             _graphics.DrawString(_content,
                 _font,
                 new SolidBrush(_color),
