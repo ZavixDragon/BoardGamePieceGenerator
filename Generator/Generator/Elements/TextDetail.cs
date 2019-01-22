@@ -23,8 +23,14 @@ namespace Generator
         public int Y;
         public int Width;
         public int Height;
-        public VerticalAlignment VerticalTextAlignment;
-        public HorizontalAlignment HorizontalTextAlignment;
+        public HorizontalAlignment HorizontalAlignment;
+        public HorizontalAlignment LineAlignment;
+        public VerticalAlignment VerticalAlignment;
+        public VerticalAlignment WordAlignment;
+        //It's flawed beacued it rotates it by this many degrees and then uses the x and y transform
+        public int FlawedRotation;
+        //It's flawed beacue it doesn't work with any special markdown or glyphs at all except newlines
+        public bool FlawedDynamicFontSizeEnabled;
 
         public TextDetail(string templateDir, JObject text, CustomJPrototypeResolver resolver)
         {
@@ -32,7 +38,7 @@ namespace Generator
             _resolver = resolver;
             Content = resolver.GetString(text, "Content");
             Font = resolver.GetString(text, "Font");
-            FontSize = resolver.GetInt(text, "FontSize");
+            FontSize = resolver.GetIntOrDefault(text, "FontSize", 0);
             FontStyle = resolver.GetFlagsEnumOrDefault(text, "FontStyle", FontStyle.Regular);
             Color = resolver.GetColorOrDefault(text, "Color", Color.Black);
             OutlineColor = resolver.GetColorOrDefault(text, "OutlineColor", Color.Transparent);
@@ -41,206 +47,390 @@ namespace Generator
             Y = resolver.GetInt(text, "Y");
             Width = resolver.GetInt(text, "Width");
             Height = resolver.GetInt(text, "Height");
-            VerticalTextAlignment = resolver.GetEnumOrDefault(text, "VerticalTextAlign", VerticalAlignment.Center);
-            HorizontalTextAlignment = resolver.GetEnumOrDefault(text, "HorizontalTextAlign", HorizontalAlignment.Center);
+            HorizontalAlignment = resolver.GetEnumOrDefault(text, "HorizontalAlignment", HorizontalAlignment.Center);
+            LineAlignment = resolver.GetEnumOrDefault(text, "LineAlignment", HorizontalAlignment.Center);
+            VerticalAlignment = resolver.GetEnumOrDefault(text, "VerticalAlignment", VerticalAlignment.Center);
+            WordAlignment = resolver.GetEnumOrDefault(text, "WordAlignment", VerticalAlignment.Bottom);
+            FlawedRotation = resolver.GetIntOrDefault(text, "FlawedRotation", 0);
+            FlawedDynamicFontSizeEnabled = resolver.GetBoolOrDefault(text, "FlawedDynamicSizeEnabled", false);
         }
 
         public void Apply(Graphics graphics)
         {
-            var fontFamily = new FontFamily(Font); 
-            var font = new Font(fontFamily, FontSize, FontStyle);
-            var spaceWidth = (int)Math.Floor(graphics.MeasureString(" ", font).Width);
-            var textLines = new TextLines(Width, font, spaceWidth, HorizontalTextAlignment);
-            Content.Split(' ').ToList().ForEach(x =>
+            if (FlawedDynamicFontSizeEnabled)
             {
-                if (x == "\n")
-                    textLines.NewLine();
-                else if (x.StartsWith("[["))
-                    textLines.Add(new Word(x.Substring(4, x.Length - 6), new Font(fontFamily, FontSize, (FontStyle)int.Parse(x.Substring(2, 2))), graphics, Color, spaceWidth, OutlineColor, OutlineThickness));
-                else if (x.StartsWith("["))
-                    textLines.Add(new Symbol(x, _templateDir, graphics, _resolver, font, fontFamily, FontStyle, Color));
-                else 
-                    textLines.Add(new Word(x, font, graphics, Color, spaceWidth, OutlineColor, OutlineThickness));
-            });
-            if (VerticalTextAlignment == VerticalAlignment.Top)
-                textLines.Draw(X, Y);
-            else if (VerticalTextAlignment == VerticalAlignment.Center)
-                textLines.Draw(X, Y + (Height - textLines.Height) / 2);
-            else if (VerticalTextAlignment == VerticalAlignment.Bottom)
-                textLines.Draw(X, Y + Height - textLines.Height);
+                DynamicFontSizeApply(graphics);
+                return;
+            }
+
+            var fontFamily = new FontFamily(Font);
+            var font = new Font(fontFamily, FontSize, FontStyle);
+            var stylingStack = new List<TextStyling>
+            {
+                new TextStyling(new FontTool(graphics, font, FontStyle, fontFamily), Color, OutlineColor, OutlineThickness)
+            };
+
+            var currentStyle = stylingStack.Last();
+            var textBlock = new TextBlock(Width, LineAlignment, WordAlignment, currentStyle.FontTool);
+            var sequence = new TextSequence(WordAlignment);
+            var str = "";
+            var hasSequenceElement = false;
+
+            for (var i = 0; i < Content.Length; i++)
+            {
+                if (Content[i] == '\n')
+                {
+                    if (str != "")
+                    {
+                        sequence.Add(currentStyle.CreateInStyle(str));
+                        str = "";
+                    }
+                    if (hasSequenceElement)
+                    {
+                        textBlock.Add(sequence, currentStyle.FontTool);
+                        sequence = new TextSequence(WordAlignment);
+                        hasSequenceElement = false;
+                    }
+                    textBlock.NewLine(currentStyle.FontTool);
+                }
+                else if (Content[i] == '[' && Content[i + 1] == '[')
+                {
+                    if (str != "")
+                    {
+                        sequence.Add(currentStyle.CreateInStyle(str));
+                        str = "";
+                    }
+                    var styleName = "";
+                    i += 2;
+                    for (var _ = 0; Content[i] != ' '; i++)
+                        styleName += Content[i];
+
+                    var prototype = (JObject) _resolver.Prototypes[styleName];
+                    var newFontName = _resolver.GetStringOrDefault(prototype, "Font", Font);
+                    var newFontSize = _resolver.GetIntOrDefault(prototype, "FontSize", FontSize);
+                    var newFontStyle = _resolver.GetFlagsEnumOrDefault(prototype, "FontStyle", FontStyle);
+                    var newColor = _resolver.GetColorOrDefault(prototype, "Color", Color);
+                    var newOutlineColor = _resolver.GetColorOrDefault(prototype, "OutlineColor", OutlineColor);
+                    var newOutlineThickness = _resolver.GetIntOrDefault(prototype, "OutlineThickness", OutlineThickness);
+
+                    var newFamily = new FontFamily(newFontName);
+                    var newFont = new Font(newFamily, newFontSize, newFontStyle);
+                    stylingStack.Add(new TextStyling(new FontTool(graphics, newFont, newFontStyle, newFamily), newColor, newOutlineColor, newOutlineThickness));
+                    currentStyle = stylingStack.Last();
+                }
+                else if (Content[i] == ']' && Content[i + 1] == ']')
+                {
+                    if (str != "")
+                    {
+                        sequence.Add(currentStyle.CreateInStyle(str));
+                        str = "";
+                    }
+                    i++;
+                    stylingStack.RemoveAt(stylingStack.Count - 1);
+                    currentStyle = stylingStack.Last();
+                }
+                else if (Content[i] == '[')
+                {
+                    if (str != "")
+                    {
+                        sequence.Add(currentStyle.CreateInStyle(str));
+                        str = "";
+                    }
+                    var glyph = "";
+                    i++;
+                    for (var _ = 0; Content[i] != ']'; i++)
+                        glyph += Content[i];
+                    sequence.Add(currentStyle.CreateInStyle(glyph, _templateDir, graphics, _resolver));
+                    hasSequenceElement = true;
+                }
+                else if (Content[i] == ' ')
+                {
+                    if (str != "")
+                    {
+                        sequence.Add(currentStyle.CreateInStyle(str));
+                        str = "";
+                    }
+                    if (hasSequenceElement)
+                    {
+                        textBlock.Add(sequence, currentStyle.FontTool);
+                        sequence = new TextSequence(WordAlignment);
+                        hasSequenceElement = false;
+                    }
+                    textBlock.AddSpace(currentStyle.CreateInStyle(" "));
+                }
+                else
+                {
+                    str += Content[i];
+                    hasSequenceElement = true;
+                }
+            }
+
+            if (str != "")
+                sequence.Add(currentStyle.CreateInStyle(str));
+            if (hasSequenceElement)
+                textBlock.Add(sequence, currentStyle.FontTool);
+
+            Finalize(graphics, textBlock);   
+        }
+
+        private void DynamicFontSizeApply(Graphics graphics)
+        {
+            var minFontSize = 0;
+            var maxFontSize = Height;
+            int fontSize = Height / 2;
+            while (minFontSize != maxFontSize)
+            {
+                var fontFamilyAttempt = new FontFamily(Font);
+                var fontAttempt = new Font(fontFamilyAttempt, fontSize, FontStyle);
+                var fontToolAttempt = new FontTool(graphics, fontAttempt, FontStyle, fontFamilyAttempt);
+                var measurement = fontToolAttempt.Measure(Content);
+                if (measurement.Width > Width || measurement.Height > Height)
+                    maxFontSize = fontSize - 1;
+                else
+                    minFontSize = fontSize;
+                fontSize = (int) (Math.Ceiling((decimal)(maxFontSize - minFontSize) / 2) + minFontSize);
+            }
+            var fontFamily = new FontFamily(Font);
+            var font = new Font(fontFamily, fontSize, FontStyle);
+            var fontTool = new FontTool(graphics, font, FontStyle, fontFamily);
+            var textBlock = new TextBlock(Width, LineAlignment, WordAlignment, fontTool);
+            textBlock.Add(new CharacterSequence(Content, Color, OutlineColor, OutlineThickness, fontTool), fontTool);
+            Finalize(graphics, textBlock);
+        }
+
+        private void Finalize(Graphics graphics, TextBlock textBlock)
+        {
+            var x = 0;
+            if (HorizontalAlignment == HorizontalAlignment.Left)
+                x = X;
+            if (HorizontalAlignment == HorizontalAlignment.Center)
+                x = X + (Width - textBlock.Width) / 2;
+            if (HorizontalAlignment == HorizontalAlignment.Right)
+                x = X + Width - textBlock.Width;
+            var y = 0;
+            if (VerticalAlignment == VerticalAlignment.Top)
+                y = Y;
+            if (VerticalAlignment == VerticalAlignment.Center)
+                y = Y + (Height - textBlock.Height) / 2;
+            if (VerticalAlignment == VerticalAlignment.Bottom)
+                y = Y + Height - textBlock.Height;
+            if (FlawedRotation > 0)
+                graphics.RotateTransform(FlawedRotation);
+            textBlock.Draw(x, y);
+            if (FlawedRotation > 0)
+                graphics.RotateTransform(-FlawedRotation);
         }
     }
 
-    public class TextLines
+    public class TextBlock
     {
-        private readonly List<TextLine> _lines = new List<TextLine>();
+        private readonly List<TextSequence> _textLines = new List<TextSequence>();
+        private readonly List<IDrawableSegment> _spaces = new List<IDrawableSegment>();
         private readonly int _maxWidth;
-        private readonly int _lineHeight;
-        private readonly int _spaceWidth;
-        private readonly HorizontalAlignment _alignment;
-        public int Height => _lines.Count * _lineHeight;
+        private readonly HorizontalAlignment _lineAlignment;
+        private readonly VerticalAlignment _wordAlignment;
 
-        public TextLines(int maxWidth, Font font, int spaceWidth, HorizontalAlignment alignment)
+        public int Width => _textLines.Count == 0 ? 0 : _textLines.Max(x => x.Width);
+        public int Height => _textLines.Sum(x => x.Height);
+
+        public TextBlock(int maxWidth, HorizontalAlignment lineAlignment, VerticalAlignment wordAlignment, FontTool tool)
         {
             _maxWidth = maxWidth;
-            _lineHeight = font.Height;
-            _spaceWidth = spaceWidth;
-            _alignment = alignment;
-            NewLine();
+            _lineAlignment = lineAlignment;
+            _wordAlignment = wordAlignment;
+            NewLine(tool);
         }
 
-        public void Add(ITextSegment segment)
+        public void Add(IDrawableSegment segment, FontTool tool)
         {
-            if (_lines.Last().Width + _spaceWidth + segment.Width > _maxWidth)
-                NewLine();
-            _lines.Last().Add(segment);
-        }
-
-        public void NewLine()
-        {
-            _lines.Add(new TextLine(_spaceWidth));
-        }
-
-        public void Draw(int x, int y)
-        {
-            for (var i = 0; i < _lines.Count; i++)
+            if (_textLines.Last().Width + segment.Width > _maxWidth)
             {
-                if (_alignment == HorizontalAlignment.Left)
-                    _lines[i].Draw(x, y + _lineHeight * i);
-                else if (_alignment == HorizontalAlignment.Center)
-                    _lines[i].Draw(x + (_maxWidth - _lines[i].Width) / 2, y + _lineHeight * i);
-                else if (_alignment == HorizontalAlignment.Right)
-                    _lines[i].Draw(x + _maxWidth - _lines[i].Width, y + _lineHeight * i);
+                _spaces.Clear();
+                NewLine(tool);
+                _textLines.Last().Add(segment);
+            }
+            else
+            {
+                _textLines.Last().Add(_spaces);
+                _spaces.Clear();
+                _textLines.Last().Add(segment);
             }
         }
-    }
 
-    public class TextLine
-    {
-        private readonly List<ITextSegment> _segments = new List<ITextSegment>();
-        private readonly int _spaceWidth;
-        public int Width => _segments.Sum(x => x.Width) + ((_segments.Count - 1) * _spaceWidth);
+        public void AddSpace(IDrawableSegment space) => _spaces.Add(space);
 
-        public TextLine(int spaceWidth)
-        {
-            _spaceWidth = spaceWidth;
-        }
-
-        public void Add(ITextSegment segment) => _segments.Add(segment);
+        public void NewLine(FontTool tool) => _textLines.Add(new TextSequence(_wordAlignment, tool.LineHeight));
 
         public void Draw(int x, int y)
         {
-            var offset = 0;
-            foreach (var segment in _segments)
-            {         
-                segment.Draw(x + offset, y);
-                offset += segment.Width + _spaceWidth;
-            }
+            var yOffset = 0;
+            _textLines.ForEach(line =>
+            {
+                if (_lineAlignment == HorizontalAlignment.Left)
+                    line.Draw(x, y + yOffset);
+                if (_lineAlignment == HorizontalAlignment.Center)
+                    line.Draw(x + (Width - line.Width) / 2, y + yOffset);
+                if (_lineAlignment == HorizontalAlignment.Right)
+                    line.Draw(x + Width - line.Width, y + yOffset);
+                yOffset += line.Height;
+            });
         }
     }
 
-    public interface ITextSegment
+    public interface IDrawableSegment
     {
         int Width { get; }
+        int Height { get; }
         void Draw(int x, int y);
     }
 
-    public class Word : ITextSegment
+    public class TextSequence : IDrawableSegment
+    {
+        private readonly List<IDrawableSegment> _segments = new List<IDrawableSegment>();
+        private readonly VerticalAlignment _wordAlignment;
+        private readonly int _minHeight;
+        public int Width => _segments.Sum(x => x.Width);
+        public int Height => _segments.Select(x => x.Height).Concat(new List<int> { _minHeight }).Max();
+
+        public TextSequence(VerticalAlignment wordAlignment, int minHeight = 0)
+        {
+            _wordAlignment = wordAlignment;
+            _minHeight = minHeight;
+        }
+
+        public void Add(IDrawableSegment segment) => _segments.Add(segment);
+
+        public void Add(IEnumerable<IDrawableSegment> segments) => _segments.AddRange(segments);
+
+        public void Draw(int x, int y)
+        {
+            var xOffset = 0;
+            _segments.ForEach(seg =>
+            {
+                if (_wordAlignment == VerticalAlignment.Top)
+                    seg.Draw(x + xOffset, y);
+                if (_wordAlignment == VerticalAlignment.Center)
+                    seg.Draw(x + xOffset, y + (Height - seg.Height) / 2);
+                if (_wordAlignment == VerticalAlignment.Bottom)
+                    seg.Draw(x + xOffset, y + Height - seg.Height);
+                xOffset += seg.Width;
+            });
+        }
+    }
+
+    public class CharacterSequence : IDrawableSegment
     {
         private readonly string _content;
-        private readonly Font _font;
-        private readonly Graphics _graphics;
-        private readonly Color _color;
-        private readonly int _spaceWidth;
-        private readonly Color _outlineColor;
+        private readonly FontTool _fontTool;
+        private readonly SolidBrush _primaryBrush;
+        private readonly bool _hasOutline;
+        private readonly SolidBrush _outlineBrush;
         private readonly int _outlineThickness;
         public int Width { get; }
+        public int Height { get; }
 
-        public Word(string content, Font font, Graphics graphics, Color color, int spaceWidth, Color outlineColor, int outlineThickness)
+        public CharacterSequence(string content, Color color, Color outlineColor, int outlineThickness, FontTool fontTool)
         {
             _content = content;
-            _font = font;
-            _graphics = graphics;
-            _color = color;
-            _spaceWidth = spaceWidth;
-            _outlineColor = outlineColor;
+            _fontTool = fontTool;
+            _primaryBrush = new SolidBrush(color);
+            _hasOutline = outlineColor.A != Color.Transparent.A && _outlineThickness > 0;
+            _outlineBrush = new SolidBrush(outlineColor);
             _outlineThickness = outlineThickness;
-            var measurement = graphics.MeasureString(_content, _font);
-            Width = (int)measurement.Width - _spaceWidth;
+            var size = _fontTool.Measure(_content);
+            Width = size.Width;
+            Height = _fontTool.LineHeight;
         }
 
         public void Draw(int x, int y)
         {
-            if (_outlineColor.A != Color.Transparent.A && _outlineThickness > 0)
-            {
-                _graphics.DrawString(_content,
-                    _font,
-                    new SolidBrush(_outlineColor),
-                    new RectangleF(x - _spaceWidth / 2 - _outlineThickness, y, Width + 1 + _spaceWidth, _font.Height * 2),
-                    new StringFormat
-                    {
-                        Trimming = StringTrimming.None,
-                        LineAlignment = StringAlignment.Near
-                    });
-                
-                _graphics.DrawString(_content,
-                    _font,
-                    new SolidBrush(_outlineColor),
-                    new RectangleF(x - _spaceWidth / 2, y - _outlineThickness, Width + 1 + _spaceWidth, _font.Height * 2),
-                    new StringFormat
-                    {
-                        Trimming = StringTrimming.None,
-                        LineAlignment = StringAlignment.Near
-                    });
-                
-                _graphics.DrawString(_content,
-                    _font,
-                    new SolidBrush(_outlineColor),
-                    new RectangleF(x - _spaceWidth / 2 + _outlineThickness, y, Width + 1 + _spaceWidth, _font.Height * 2),
-                    new StringFormat
-                    {
-                        Trimming = StringTrimming.None,
-                        LineAlignment = StringAlignment.Near
-                    });
-                
-                _graphics.DrawString(_content,
-                    _font,
-                    new SolidBrush(_outlineColor),
-                    new RectangleF(x - _spaceWidth / 2, y + _outlineThickness, Width + 1 + _spaceWidth, _font.Height * 2),
-                    new StringFormat
-                    {
-                        Trimming = StringTrimming.None,
-                        LineAlignment = StringAlignment.Near
-                    });
-            }
-            _graphics.DrawString(_content,
-                _font,
-                new SolidBrush(_color),
-                new RectangleF(x - _spaceWidth / 2, y, Width + 1 + _spaceWidth, _font.Height * 2),
-                new StringFormat
-                {
-                    Trimming = StringTrimming.None,
-                    LineAlignment = StringAlignment.Near
-                });
+            if (_hasOutline)
+                DrawOutline(x, y);
+            _fontTool.Draw(_content, _primaryBrush, x, y);
+        }
+
+        private void DrawOutline(int x, int y)
+        {
+            _fontTool.Draw(_content, _outlineBrush, x - _outlineThickness, y);
+            _fontTool.Draw(_content, _outlineBrush, x + _outlineThickness, y);
+            _fontTool.Draw(_content, _outlineBrush, x, y - _outlineThickness);
+            _fontTool.Draw(_content, _outlineBrush, x, y + _outlineThickness);
         }
     }
 
-    public class Symbol : ITextSegment
+    public class Glyph : IDrawableSegment
     {
         private readonly string _image;
         private readonly Graphics _graphics;
         private readonly decimal _opacity;
         public int Width { get; }
+        public int Height { get; }
 
-        public Symbol(string symbol, string templateDir, Graphics graphics, CustomJPrototypeResolver resolver, Font font, FontFamily fontFamily, FontStyle fontStyle, Color opacity)
+        public Glyph(string symbol, string templateDir, Graphics graphics, CustomJPrototypeResolver resolver, Color opacity, FontTool font)
         {
-            _image = Path.GetFullPath(Path.Combine(templateDir, resolver.GetRootValue(symbol.Substring(1, symbol.Length - 2))));
+            _image = Path.GetFullPath(Path.Combine(templateDir, resolver.GetRootValue(symbol)));
             _graphics = graphics;
             _opacity = (decimal)opacity.A / 255;
-            var lineSpacing = font.Size * fontFamily.GetLineSpacing(fontStyle) / fontFamily.GetEmHeight(fontStyle);
-            Width = (int)Math.Ceiling(lineSpacing);
+            Width = font.GlyphHeight;
+            Height = font.GlyphHeight;
         }
 
-        public void Draw(int x, int y) => _graphics.DrawImage(Image.FromFile(_image).WithOpacity(_opacity), new Rectangle(x, y, Width, Width));
+        public void Draw(int x, int y) => _graphics.DrawImage(Image.FromFile(_image).WithOpacity(_opacity), new Rectangle(x, y, Width, Height));
+    }
+
+    public class TextStyling
+    {
+        private readonly Color _color;
+        private readonly Color _outlineColor;
+        private readonly int _outlineThickness;
+        public FontTool FontTool { get; }
+
+        public TextStyling(FontTool fontTool, Color color, Color outlineColor, int outlineThickness)
+        {
+            _color = color;
+            _outlineColor = outlineColor;
+            _outlineThickness = outlineThickness;
+            FontTool = fontTool;
+        }
+
+        public CharacterSequence CreateInStyle(string content) =>
+            new CharacterSequence(content, _color, _outlineColor, _outlineThickness, FontTool);
+
+        public Glyph CreateInStyle(string symbol, string templateDir, Graphics graphics, CustomJPrototypeResolver resolver) => 
+            new Glyph(symbol, templateDir, graphics, resolver, _color, FontTool);
+    }
+
+    public class FontTool
+    {
+        private readonly StringFormat _format = new StringFormat { Trimming = StringTrimming.None, LineAlignment = StringAlignment.Near };
+        private readonly Graphics _graphics;
+        private readonly Font _font;
+        private readonly float _spaceWidth;
+        private readonly float _letterAndSpaceWidth;
+        public int LineHeight { get; }
+        public int GlyphHeight { get; }
+
+        //MeasureString always gives you the full line height as the height
+        public FontTool(Graphics graphics, Font font, FontStyle style, FontFamily family)
+        {
+            _graphics = graphics;
+            _font = font;
+            var spaceSize = graphics.MeasureString(" ", font);
+            _spaceWidth = spaceSize.Width;
+            _letterAndSpaceWidth = graphics.MeasureString("Z ", font).Width;
+            LineHeight = (int)Math.Ceiling(spaceSize.Height);
+            GlyphHeight = LineHeight;
+        }
+
+        //MeasureString ensures there is exactly one trailing space
+        public Size Measure(string text)
+        {
+            var measurement = _graphics.MeasureString(text + "Z ", _font);
+            return new Size((int) Math.Ceiling(measurement.Width - _letterAndSpaceWidth), (int) Math.Ceiling(measurement.Height)); 
+        }
+
+        //DrawString also draws with a trailing space
+        public void Draw(string text, SolidBrush brush, int x, int y) => 
+            _graphics.DrawString(text, _font, brush, new RectangleF(x - _spaceWidth / 2, y, Measure(text).Width + _spaceWidth, _font.Height * 2f), _format);
     }
 }
