@@ -34,7 +34,7 @@ namespace ListToJsonConvertor
             }
             if (property.Count == 0)
                 throw new Exception($"Missing Property \"{name}\" on item: \n{string.Join(@"\n", item)}");
-            return string.Join(" \n ", property);
+            return string.Join("\n", property);
         }
         
         private bool IsProperty(string name, string line) => line.StartsWith(name);
