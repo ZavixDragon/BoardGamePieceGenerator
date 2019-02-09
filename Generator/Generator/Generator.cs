@@ -68,6 +68,7 @@ namespace Generator
                 catch
                 {
                     Console.WriteLine($"Error On Item {i}: {items[i].ToString(Formatting.None)}");
+                    Console.Read();
                     throw;
                 }
             }
