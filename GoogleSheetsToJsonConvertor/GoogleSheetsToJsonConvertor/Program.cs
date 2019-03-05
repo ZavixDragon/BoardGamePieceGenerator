@@ -19,7 +19,13 @@ namespace GoogleSheetsToJsonConvertor
 
         public static void Main(string[] args)
         {
-            var instructionsPath = args[0];
+            args.ForEach(Go);
+            Console.Write("Success");
+            Console.Read();
+        }
+
+        private static void Go(string instructionsPath)
+        {
             var instructionsDir = Path.GetDirectoryName(instructionsPath);
             var instructions = JObjectX.FromFile(instructionsPath);
             var propertyInstructions = ((JArray)instructions["Properties"]).Select(x => new PropertyInstruction((JObject)x)).ToList();
@@ -33,8 +39,6 @@ namespace GoogleSheetsToJsonConvertor
             jObject.Items = jArray;
             var output = instructions.GetPropertyValue("Output");
             File.WriteAllText(PathX.Build(instructionsDir, output), jObject.ToString());
-            Console.Write("Success");
-            Console.Read();
         }
 
         private static List<List<string>> GetDataFromGoogleSheets(string spreadsheetId, string range)

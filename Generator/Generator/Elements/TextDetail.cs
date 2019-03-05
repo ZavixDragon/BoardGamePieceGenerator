@@ -17,6 +17,9 @@ namespace Generator
         public int FontSize;
         public FontStyle FontStyle;
         public Color Color;
+        public Color BackgroundColor;
+        public Color BackgroundBorderColor;
+        public int BackgroundBorderThickness;
         public Color OutlineColor;
         public int OutlineThickness;
         public int X;
@@ -41,6 +44,9 @@ namespace Generator
             FontSize = resolver.GetIntOrDefault(text, "FontSize", 0);
             FontStyle = resolver.GetFlagsEnumOrDefault(text, "FontStyle", FontStyle.Regular);
             Color = resolver.GetColorOrDefault(text, "Color", Color.Black);
+            BackgroundColor = resolver.GetColorOrDefault(text, "BackgroundColor", Color.Transparent);
+            BackgroundBorderColor = resolver.GetColorOrDefault(text, "BackgroundBorderColor", Color.Transparent);
+            BackgroundBorderThickness = resolver.GetIntOrDefault(text, "BackgroundBorderThickness", 0);
             OutlineColor = resolver.GetColorOrDefault(text, "OutlineColor", Color.Transparent);
             OutlineThickness = resolver.GetIntOrDefault(text, "OutlineThickness", 0);
             X = resolver.GetInt(text, "X");
@@ -63,16 +69,15 @@ namespace Generator
                 return;
             }
 
-            var fontFamily = new FontFamily(Font);
-            var font = new Font(fontFamily, FontSize, FontStyle);
+            
             var stylingStack = new List<TextStyling>
             {
-                new TextStyling(new FontTool(graphics, font, FontStyle, fontFamily), Color, OutlineColor, OutlineThickness)
+                new TextStyling(graphics, Font, FontSize, FontStyle, Color, BackgroundColor, BackgroundBorderColor, BackgroundBorderThickness, OutlineColor, OutlineThickness)
             };
 
             var currentStyle = stylingStack.Last();
-            var textBlock = new TextBlock(Width, LineAlignment, WordAlignment, currentStyle.FontTool);
-            var sequence = new TextSequence(WordAlignment);
+            var textBlock = new TextBlock(Width, LineAlignment, WordAlignment, currentStyle.FontTool, currentStyle.BackgroundTool);
+            var sequence = currentStyle.CreateInStyle(WordAlignment);
             var str = "";
             var hasSequenceElement = false;
 
@@ -87,11 +92,11 @@ namespace Generator
                     }
                     if (hasSequenceElement)
                     {
-                        textBlock.Add(sequence, currentStyle.FontTool);
-                        sequence = new TextSequence(WordAlignment);
+                        textBlock.Add(sequence, currentStyle.FontTool, currentStyle.BackgroundTool);
+                        sequence = currentStyle.CreateInStyle(WordAlignment);
                         hasSequenceElement = false;
                     }
-                    textBlock.NewLine(currentStyle.FontTool);
+                    textBlock.NewLine(currentStyle.FontTool, currentStyle.BackgroundTool);
                 }
                 else if (Content[i] == '[' && Content[i + 1] == '[')
                 {
@@ -105,18 +110,10 @@ namespace Generator
                     for (var _ = 0; Content[i] != ' '; i++)
                         styleName += Content[i];
 
-                    var prototype = (JObject) _resolver.Prototypes[styleName];
-                    var newFontName = _resolver.GetStringOrDefault(prototype, "Font", Font);
-                    var newFontSize = _resolver.GetIntOrDefault(prototype, "FontSize", FontSize);
-                    var newFontStyle = _resolver.GetFlagsEnumOrDefault(prototype, "FontStyle", FontStyle);
-                    var newColor = _resolver.GetColorOrDefault(prototype, "Color", Color);
-                    var newOutlineColor = _resolver.GetColorOrDefault(prototype, "OutlineColor", OutlineColor);
-                    var newOutlineThickness = _resolver.GetIntOrDefault(prototype, "OutlineThickness", OutlineThickness);
-
-                    var newFamily = new FontFamily(newFontName);
-                    var newFont = new Font(newFamily, newFontSize, newFontStyle);
-                    stylingStack.Add(new TextStyling(new FontTool(graphics, newFont, newFontStyle, newFamily), newColor, newOutlineColor, newOutlineThickness));
+                    stylingStack.Add(new TextStyling(graphics, currentStyle, _resolver, (JObject)_resolver.Prototypes[styleName]));
                     currentStyle = stylingStack.Last();
+                    if (!hasSequenceElement)
+                        sequence = currentStyle.CreateInStyle(WordAlignment);
                 }
                 else if (Content[i] == ']' && Content[i + 1] == ']')
                 {
@@ -152,11 +149,16 @@ namespace Generator
                     }
                     if (hasSequenceElement)
                     {
-                        textBlock.Add(sequence, currentStyle.FontTool);
-                        sequence = new TextSequence(WordAlignment);
+                        textBlock.Add(sequence, currentStyle.FontTool, currentStyle.BackgroundTool);
+                        sequence = currentStyle.CreateInStyle(WordAlignment);
                         hasSequenceElement = false;
                     }
                     textBlock.AddSpace(currentStyle.CreateInStyle(" "));
+                }
+                else if (Content[i] == '_')
+                {
+                    str += " ";
+                    hasSequenceElement = true;
                 }
                 else
                 {
@@ -168,7 +170,7 @@ namespace Generator
             if (str != "")
                 sequence.Add(currentStyle.CreateInStyle(str));
             if (hasSequenceElement)
-                textBlock.Add(sequence, currentStyle.FontTool);
+                textBlock.Add(sequence, currentStyle.FontTool, currentStyle.BackgroundTool);
 
             Finalize(graphics, textBlock);   
         }
@@ -193,8 +195,9 @@ namespace Generator
             var fontFamily = new FontFamily(Font);
             var font = new Font(fontFamily, fontSize, FontStyle);
             var fontTool = new FontTool(graphics, font, FontStyle, fontFamily);
-            var textBlock = new TextBlock(Width, LineAlignment, WordAlignment, fontTool);
-            textBlock.Add(new CharacterSequence(Content, Color, OutlineColor, OutlineThickness, fontTool), fontTool);
+            var backgroundTool = new BackgroundTool(graphics, BackgroundColor, BackgroundBorderColor, BackgroundBorderThickness);
+            var textBlock = new TextBlock(Width, LineAlignment, WordAlignment, fontTool, backgroundTool);
+            textBlock.Add(new CharacterSequence(Content, Color, OutlineColor, OutlineThickness, fontTool), fontTool, backgroundTool);
             Finalize(graphics, textBlock);
         }
 
@@ -233,20 +236,20 @@ namespace Generator
         public int Width => _textLines.Count == 0 ? 0 : _textLines.Max(x => x.Width);
         public int Height => _textLines.Sum(x => x.Height);
 
-        public TextBlock(int maxWidth, HorizontalAlignment lineAlignment, VerticalAlignment wordAlignment, FontTool tool)
+        public TextBlock(int maxWidth, HorizontalAlignment lineAlignment, VerticalAlignment wordAlignment, FontTool fontTool, BackgroundTool backgroundTool)
         {
             _maxWidth = maxWidth;
             _lineAlignment = lineAlignment;
             _wordAlignment = wordAlignment;
-            NewLine(tool);
+            NewLine(fontTool, backgroundTool);
         }
 
-        public void Add(IDrawableSegment segment, FontTool tool)
+        public void Add(IDrawableSegment segment, FontTool fontTool, BackgroundTool backgroundTool)
         {
             if (_textLines.Last().Width + segment.Width > _maxWidth)
             {
                 _spaces.Clear();
-                NewLine(tool);
+                NewLine(fontTool, backgroundTool);
                 _textLines.Last().Add(segment);
             }
             else
@@ -259,7 +262,7 @@ namespace Generator
 
         public void AddSpace(IDrawableSegment space) => _spaces.Add(space);
 
-        public void NewLine(FontTool tool) => _textLines.Add(new TextSequence(_wordAlignment, tool.LineHeight));
+        public void NewLine(FontTool fontTool, BackgroundTool backgroundTool) => _textLines.Add(new TextSequence(_wordAlignment, backgroundTool, fontTool.LineHeight));
 
         public void Draw(int x, int y)
         {
@@ -288,13 +291,15 @@ namespace Generator
     {
         private readonly List<IDrawableSegment> _segments = new List<IDrawableSegment>();
         private readonly VerticalAlignment _wordAlignment;
+        private readonly BackgroundTool _backgroundTool;
         private readonly int _minHeight;
         public int Width => _segments.Sum(x => x.Width);
         public int Height => _segments.Select(x => x.Height).Concat(new List<int> { _minHeight }).Max();
 
-        public TextSequence(VerticalAlignment wordAlignment, int minHeight = 0)
+        public TextSequence(VerticalAlignment wordAlignment, BackgroundTool backgroundTool, int minHeight = 0)
         {
             _wordAlignment = wordAlignment;
+            _backgroundTool = backgroundTool;
             _minHeight = minHeight;
         }
 
@@ -305,6 +310,7 @@ namespace Generator
         public void Draw(int x, int y)
         {
             var xOffset = 0;
+            _backgroundTool.Draw(x, y, Width, Height);
             _segments.ForEach(seg =>
             {
                 if (_wordAlignment == VerticalAlignment.Top)
@@ -375,29 +381,63 @@ namespace Generator
             Height = font.GlyphHeight;
         }
 
-        public void Draw(int x, int y) => _graphics.DrawImage(Image.FromFile(_image).WithOpacity(_opacity), new Rectangle(x, y, Width, Height));
+        public void Draw(int x, int y)
+        {
+            _graphics.DrawImage(Image.FromFile(_image).WithOpacity(_opacity), new Rectangle(x + 4, y + 4, Width - 8, Height - 8));
+        }
     }
 
     public class TextStyling
     {
-        private readonly Color _color;
-        private readonly Color _outlineColor;
-        private readonly int _outlineThickness;
+        public string FontName { get; }
+        public int FontSize { get; }
+        public FontStyle FontStyle { get; }
+        public Color Color { get; }
+        public Color BackgroundColor { get; }
+        public Color BackgroundBorderColor { get; }
+        public int BackgroundBorderThickness { get; }
+        public Color OutlineColor { get; }
+        public int OutlineThickness { get; }
         public FontTool FontTool { get; }
+        public BackgroundTool BackgroundTool { get; }
 
-        public TextStyling(FontTool fontTool, Color color, Color outlineColor, int outlineThickness)
+        public TextStyling(Graphics graphics, TextStyling previousStyle, CustomJPrototypeResolver resolver, JObject prototype) 
+            : this(graphics, 
+                resolver.GetStringOrDefault(prototype, "Font", previousStyle.FontName),
+                resolver.GetIntOrDefault(prototype, "FontSize", previousStyle.FontSize),
+                resolver.GetFlagsEnumOrDefault(prototype, "FontStyle", previousStyle.FontStyle),
+                resolver.GetColorOrDefault(prototype, "Color", previousStyle.Color),
+                resolver.GetColorOrDefault(prototype, "BackgroundColor", previousStyle.BackgroundColor),
+                resolver.GetColorOrDefault(prototype, "BackgroundBorderColor", previousStyle.BackgroundBorderColor),
+                resolver.GetIntOrDefault(prototype, "BackgroundBorderThickness", previousStyle.BackgroundBorderThickness),
+                resolver.GetColorOrDefault(prototype, "OutlineColor", previousStyle.OutlineColor),
+                resolver.GetIntOrDefault(prototype, "OutlineThickness", previousStyle.OutlineThickness)) {}
+
+        public TextStyling(Graphics graphics, string fontName, int fontSize, FontStyle fontStyle, Color color, Color backgroundColor, Color backgroundBorderColor, int backgroundBorderThickness, Color outlineColor, int outlineThickness)
         {
-            _color = color;
-            _outlineColor = outlineColor;
-            _outlineThickness = outlineThickness;
-            FontTool = fontTool;
+            FontName = fontName;
+            FontSize = fontSize;
+            FontStyle = fontStyle;
+            Color = color;
+            BackgroundColor = backgroundColor;
+            BackgroundBorderColor = backgroundBorderColor;
+            BackgroundBorderThickness = backgroundBorderThickness;
+            OutlineColor = outlineColor;
+            OutlineThickness = outlineThickness;
+            var fontFamily = new FontFamily(fontName);
+            var font = new Font(fontFamily, FontSize, FontStyle);
+            FontTool = new FontTool(graphics, font, fontStyle, fontFamily);
+            BackgroundTool = new BackgroundTool(graphics, backgroundColor, backgroundBorderColor, backgroundBorderThickness);
         }
 
+        public TextSequence CreateInStyle(VerticalAlignment wordAlignment) =>
+            new TextSequence(wordAlignment, BackgroundTool, FontTool.LineHeight);
+
         public CharacterSequence CreateInStyle(string content) =>
-            new CharacterSequence(content, _color, _outlineColor, _outlineThickness, FontTool);
+            new CharacterSequence(content, Color, OutlineColor, OutlineThickness, FontTool);
 
         public Glyph CreateInStyle(string symbol, string templateDir, Graphics graphics, CustomJPrototypeResolver resolver) => 
-            new Glyph(symbol, templateDir, graphics, resolver, _color, FontTool);
+            new Glyph(symbol, templateDir, graphics, resolver, Color, FontTool);
     }
 
     public class FontTool
@@ -432,5 +472,31 @@ namespace Generator
         //DrawString also draws with a trailing space
         public void Draw(string text, SolidBrush brush, int x, int y) => 
             _graphics.DrawString(text, _font, brush, new RectangleF(x - _spaceWidth / 2, y, Measure(text).Width + _spaceWidth, _font.Height * 2f), _format);
+    }
+
+    public class BackgroundTool
+    {
+        private readonly Graphics _graphics;
+        private readonly bool _hasBackground;
+        private readonly SolidBrush _backgroundBrush;
+        private readonly bool _hasBackgroundBorder;
+        private readonly Pen _backgroundBorderPen;
+
+        public BackgroundTool(Graphics graphics, Color backgroundColor, Color backgroundBorderColor, int backgroundBorderThickness)
+        {
+            _graphics = graphics;
+            _hasBackground = backgroundColor.A != Color.Transparent.A;
+            _backgroundBrush = new SolidBrush(backgroundColor);
+            _hasBackgroundBorder = backgroundBorderColor.A != Color.Transparent.A && backgroundBorderThickness != 0;
+            _backgroundBorderPen = new Pen(backgroundBorderColor, backgroundBorderThickness);
+        }
+
+        public void Draw(int x, int y, int width, int height)
+        {
+            if (_hasBackground)
+                _graphics.FillRectangle(_backgroundBrush, x, y, width, height);
+            if (_hasBackgroundBorder)
+                _graphics.DrawRectangle(_backgroundBorderPen, x, y, width, height);
+        }
     }
 }
