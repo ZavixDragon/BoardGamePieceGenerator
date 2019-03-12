@@ -34,6 +34,8 @@ namespace GoogleSheetsToJsonConvertor
             var range = instructions.GetPropertyValue("Range");
             var unprocessedItems = GetDataFromGoogleSheets(spreadsheetID, range);
             var items = unprocessedItems.Select(x => itemProcessor.Build(x)).ToList();
+            if (instructions.ContainsKey("Sort"))
+                items.Sort((a, b) => a.GetPropertyValue(instructions.GetPropertyValue("Sort")).CompareTo(b.GetPropertyValue(instructions.GetPropertyValue("Sort"))));
             var jArray = new JArray(items);
             dynamic jObject = new JObject();
             jObject.Items = jArray;
