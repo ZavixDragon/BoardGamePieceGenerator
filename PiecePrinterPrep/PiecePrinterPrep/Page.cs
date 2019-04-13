@@ -65,6 +65,8 @@ namespace PiecePrinterPrep
                     backBitmap.Save(PathX.Build(directory, saveName + "Back" + _pageNumber + ".png"), ImageFormat.Png);
                 }
             }
+            frontBitmap.Dispose();
+            backBitmap.Dispose();
         }
     }
 
