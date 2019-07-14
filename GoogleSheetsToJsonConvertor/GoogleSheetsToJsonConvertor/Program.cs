@@ -15,7 +15,7 @@ namespace GoogleSheetsToJsonConvertor
     public class Program
     {
         private static readonly string[] _scopes = { SheetsService.Scope.SpreadsheetsReadonly };
-        private static readonly string _applicationName = "Google Sheets API .NET Quickstart";
+        private static readonly string _applicationName = "Diff Name";
 
         public static void Main(string[] args)
         {
@@ -45,22 +45,22 @@ namespace GoogleSheetsToJsonConvertor
 
         private static List<List<string>> GetDataFromGoogleSheets(string spreadsheetId, string range)
         {
-            UserCredential credential;
+            ClientSecrets secrets;
             using (var stream = new FileStream("credentials.json", FileMode.Open, FileAccess.Read))
             {
-                var credPath = "token.json";
-                credential = GoogleWebAuthorizationBroker.AuthorizeAsync(
-                    GoogleClientSecrets.Load(stream).Secrets,
-                    _scopes,
-                    "user",
-                    CancellationToken.None,
-                    new FileDataStore(credPath, true)).Result;
+                secrets = GoogleClientSecrets.Load(stream).Secrets;
             }
             var service = new SheetsService(new BaseClientService.Initializer()
             {
-                HttpClientInitializer = credential,
+                HttpClientInitializer = GoogleWebAuthorizationBroker.AuthorizeAsync(
+                    secrets,
+                    _scopes,
+                    "user",
+                    CancellationToken.None,
+                    new FileDataStore("token.json", true)).Result,
                 ApplicationName = _applicationName,
             });
+            
             var request = service.Spreadsheets.Values.Get(spreadsheetId, range);
             var response = request.Execute();
             IList<IList<object>> values = response.Values;

@@ -62,7 +62,7 @@ namespace Generator
                             }
                         });
                         graphics.Flush();
-                        bitmap.Save(PathX.Build(instructionsDir, savePath, $"{saveName}{i}.png"), ImageFormat.Png);
+                        SaveTrimmedImage(resolver, blueprint, bitmap, instructionsDir, savePath, saveName, i, canvas);
                     });
                 }
                 catch
@@ -71,6 +71,25 @@ namespace Generator
                     Console.Read();
                     throw;
                 }
+            }
+        }
+
+        private void SaveTrimmedImage(CustomJPrototypeResolver resolver, JObject blueprint, Bitmap bitmap, string instructionsDir, string savePath, string saveName, int item, Canvas canvas)
+        {
+            var trim = resolver.GetIntOrDefault(blueprint, "PostTrim", 0);
+            var extension = resolver.GetStringOrDefault(blueprint, "SavePathExtension", "");
+            if (trim == 0)
+                bitmap.Save(PathX.Build(instructionsDir, savePath + extension, $"{saveName}{item}.png"), ImageFormat.Png);
+            else
+            {
+                var trimmedBitmap = new Bitmap(canvas.Width - trim * 2, canvas.Height - trim * 2);
+                WithGraphics(trimmedBitmap, g =>
+                {
+                    g.DrawImage(bitmap,
+                        new Rectangle(0, 0, trimmedBitmap.Width, trimmedBitmap.Height),
+                        new Rectangle(trim, trim, trimmedBitmap.Width, trimmedBitmap.Height), GraphicsUnit.Pixel);
+                    trimmedBitmap.Save(PathX.Build(instructionsDir, savePath + extension, $"{saveName}{item}.png"), ImageFormat.Png);
+                });
             }
         }
 

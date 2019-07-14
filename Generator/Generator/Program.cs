@@ -2,6 +2,6 @@
 {
     class Program
     {
-        static void Main(string[] args) => new Generator().Run	(args[0]); 
+        static void Main(string[] args) => args.ForEach(x => new Generator().Run(x)); 
     }
 }
