@@ -79,11 +79,18 @@ namespace Generator
             var textBlock = new TextBlock(Width, LineAlignment, WordAlignment, currentStyle.FontTool, currentStyle.BackgroundTool);
             var sequence = currentStyle.CreateInStyle(WordAlignment);
             var str = "";
+            var str2 = "";
             var hasSequenceElement = false;
 
             for (var i = 0; i < Content.Length; i++)
             {
-                if (Content[i] == '\n')
+                if (Content[i] == '\\')
+                {
+                    i++;
+                    str += Content[i];
+                    hasSequenceElement = true;
+                }
+                else if (Content[i] == '\n')
                 {
                     if (str != "")
                     {
@@ -142,7 +149,13 @@ namespace Generator
                 }
                 else if (Content[i] == ' ')
                 {
-                    if (str != "")
+                    if (str2 != "")
+                    {
+                        sequence.Add(currentStyle.CreateInStyle(str2, str, _templateDir, graphics, _resolver, WordAlignment));
+                        str2 = "";
+                        str = "";
+                    }
+                    else if (str != "")
                     {
                         sequence.Add(currentStyle.CreateInStyle(str));
                         str = "";
@@ -160,6 +173,11 @@ namespace Generator
                     str += " ";
                     hasSequenceElement = true;
                 }
+                else if (Content[i] == '@' && str != "" && Content.Length > i + 1 && Content[i + 1] != ' ')
+                {
+                    str2 = str;
+                    str = "";
+                }
                 else
                 {
                     str += Content[i];
@@ -167,7 +185,9 @@ namespace Generator
                 }
             }
 
-            if (str != "")
+            if (str2 != "")
+                sequence.Add(currentStyle.CreateInStyle(str2, str, _templateDir, graphics, _resolver, WordAlignment));
+            else if (str != "")
                 sequence.Add(currentStyle.CreateInStyle(str));
             if (hasSequenceElement)
                 textBlock.Add(sequence, currentStyle.FontTool, currentStyle.BackgroundTool);
@@ -387,6 +407,44 @@ namespace Generator
         }
     }
 
+    public class GlyphedCharacterSequence : IDrawableSegment
+    {
+        private readonly CharacterSequence _characterSequence;
+        private readonly Glyph _glyph;
+        private readonly VerticalAlignment _wordAlignment;
+        public int Width => Math.Max(_characterSequence.Width, _glyph.Width);
+        public int Height => Math.Max(_characterSequence.Height, _glyph.Height);
+
+        public GlyphedCharacterSequence(CharacterSequence characterSequence, Glyph glyph, VerticalAlignment wordAlignment)
+        {
+            _characterSequence = characterSequence;
+            _glyph = glyph;
+            _wordAlignment = wordAlignment;
+        }
+        
+        public void Draw(int x, int y)
+        {
+            if (_characterSequence.Width > _glyph.Width)
+            {
+                _glyph.Draw(x + (_characterSequence.Width - _glyph.Width) / 2, y);
+                if (_wordAlignment == VerticalAlignment.Center)
+                    y += + (Height - _characterSequence.Height) / 2;
+                if (_wordAlignment == VerticalAlignment.Bottom)
+                    y += Height - _characterSequence.Height;
+                _characterSequence.Draw(x, y);
+            }
+            else
+            {
+                _glyph.Draw(x, y);
+                if (_wordAlignment == VerticalAlignment.Center)
+                    y += + (Height - _characterSequence.Height) / 2;
+                if (_wordAlignment == VerticalAlignment.Bottom)
+                    y += Height - _characterSequence.Height;
+                _characterSequence.Draw(x + (_glyph.Width - _characterSequence.Width) / 2, y);
+            }
+        }
+    }
+
     public class TextStyling
     {
         public string FontName { get; }
@@ -438,6 +496,9 @@ namespace Generator
 
         public Glyph CreateInStyle(string symbol, string templateDir, Graphics graphics, CustomJPrototypeResolver resolver) => 
             new Glyph(symbol, templateDir, graphics, resolver, Color, FontTool);
+        
+        public GlyphedCharacterSequence CreateInStyle(string content, string symbol, string templateDir, Graphics graphics, CustomJPrototypeResolver resolver, VerticalAlignment wordAlignment) =>
+            new GlyphedCharacterSequence(CreateInStyle(content), CreateInStyle(symbol, templateDir, graphics, resolver), wordAlignment);
     }
 
     public class FontTool
