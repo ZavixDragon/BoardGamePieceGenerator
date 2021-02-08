@@ -23,6 +23,7 @@ namespace Generator
             var items = GetItems(instructions, instructionsDir);
             var constants = GetConstants(instructions, instructionsDir);
             var prototypes = GetPrototypes(instructions, instructionsDir);
+            var savePaths = new HashSet<string>();
 
             var applyType = new Dictionary<string, Action<JObject, CustomJPrototypeResolver, Graphics>>
             {
@@ -62,7 +63,7 @@ namespace Generator
                             }
                         });
                         graphics.Flush();
-                        SaveTrimmedImage(resolver, blueprint, bitmap, instructionsDir, savePath, saveName, i, canvas);
+                        SaveTrimmedImage(resolver, instructions, blueprint, bitmap, instructionsDir, savePath, saveName, i, canvas, savePaths);
                     });
                 }
                 catch
@@ -74,12 +75,12 @@ namespace Generator
             }
         }
 
-        private void SaveTrimmedImage(CustomJPrototypeResolver resolver, JObject blueprint, Bitmap bitmap, string instructionsDir, string savePath, string saveName, int item, Canvas canvas)
+        private void SaveTrimmedImage(CustomJPrototypeResolver resolver, JObject instructions, JObject blueprint, Bitmap bitmap, string instructionsDir, string savePath, string saveName, int item, Canvas canvas, HashSet<string> savedPaths)
         {
             var trim = resolver.GetIntOrDefault(blueprint, "PostTrim", 0);
-            var extension = resolver.GetStringOrDefault(blueprint, "SavePathExtension", "");
+            var path = GetSavePath(resolver, instructions, blueprint, instructionsDir, savePath, saveName, item, savedPaths);
             if (trim == 0)
-                bitmap.Save(PathX.Build(instructionsDir, savePath + extension, $"{saveName}{item}.png"), ImageFormat.Png);
+                bitmap.Save(path, ImageFormat.Png);
             else
             {
                 var trimmedBitmap = new Bitmap(canvas.Width - trim * 2, canvas.Height - trim * 2);
@@ -88,9 +89,24 @@ namespace Generator
                     g.DrawImage(bitmap,
                         new Rectangle(0, 0, trimmedBitmap.Width, trimmedBitmap.Height),
                         new Rectangle(trim, trim, trimmedBitmap.Width, trimmedBitmap.Height), GraphicsUnit.Pixel);
-                    trimmedBitmap.Save(PathX.Build(instructionsDir, savePath + extension, $"{saveName}{item}.png"), ImageFormat.Png);
+                    trimmedBitmap.Save(path, ImageFormat.Png);
                 });
             }
+        }
+
+        private string GetSavePath(CustomJPrototypeResolver resolver, JObject instructions, JObject blueprint, string instructionsDir, string savePath, string saveName, int item, HashSet<string> savedPaths)
+        {
+            var extension = resolver.GetStringOrDefault(blueprint, "SavePathExtension", "");
+            var path = saveName.Contains("~")
+                ? PathX.Build(instructionsDir, savePath + extension, $"{resolver.GetString(instructions, "SaveName")}.png")
+                : PathX.Build(instructionsDir, savePath + extension, $"{saveName}{item}.png");
+            if (savedPaths.Contains(path))
+            {
+                Console.WriteLine($"Duplicate Save Path Detected: {path}");
+                throw new ArgumentException();
+            }
+            savedPaths.Add(path);
+            return path;
         }
 
         private List<JObject> GetItems(JObject instructions, string instructionsDir)
